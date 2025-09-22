@@ -66,7 +66,7 @@ export const ProjectModal = ({ project, children, language }: ProjectModalProps)
           {children}
         </div>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl w-full h-[90vh] p-0 glass border-border/20" 
+      <DialogContent className="max-w-4xl w-full max-h-[90vh] p-0 glass border-border/20 overflow-hidden" 
         onClick={(e) => e.stopPropagation()}>
         <div className="flex flex-col h-full">
           {/* Header */}
