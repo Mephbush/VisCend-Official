@@ -27,15 +27,15 @@ const Web = () => {
       digitalReadinessDescription: "In today's digital-first world, having a strong online presence isn't optional, it's essential. We provide comprehensive digital transformation services that position your business for success in the digital landscape.",
 
       servicesTitle: "Our Web Services",
-      services: [
-        {
-          icon: Briefcase,
-          title: "Corporate Websites",
-          description: "Professional corporate websites that establish credibility and showcase your brand with sophistication.",
-          features: ["Responsive Design", "CMS Integration", "SEO Optimization", "Brand Consistency"],
-          technologies: ["React", "Next.js", "WordPress", "Headless CMS"],
-          projects: ["Company Profiles", "Service Portfolios", "Team Showcases"]
-        },
+       services: [
+         {
+           icon: Briefcase,
+           title: "Brand Identity & Corporate Websites",
+           description: "Professional corporate websites and comprehensive digital identity design that establishes credibility and enhances your digital presence.",
+           features: ["Logo & Visual Identity Design", "Comprehensive Corporate Websites", "SEO & Performance Optimization", "Content Strategy & Security"],
+           technologies: ["React", "Next.js", "WordPress", "Headless CMS"],
+           projects: ["Brand Identities", "Corporate Websites", "Digital Strategies"]
+         },
         {
           icon: ShoppingCart,
           title: "E-Commerce Platforms",
@@ -68,14 +68,14 @@ const Web = () => {
           technologies: ["Progressive Web Apps", "Modern Web Standards"],
           projects: ["Mobile-Optimized Sites", "Progressive Web Apps"]
         },
-        {
-          icon: Search,
-          title: "SEO & Digital Marketing",
-          description: "Comprehensive SEO and digital marketing services to increase visibility and drive qualified traffic.",
-          features: ["Keyword Research", "On-Page SEO", "Content Strategy", "Analytics"],
-          technologies: ["Google Analytics", "Search Console", "SEMrush", "Ahrefs"],
-          projects: ["SEO Campaigns", "Content Marketing", "Local SEO"]
-        }
+         {
+           icon: Search,
+           title: "Performance & Security Optimization", 
+           description: "Comprehensive services to optimize website performance, protect it, and increase visibility in search engines.",
+           features: ["Load Speed Optimization", "Search Engine Optimization", "Security & Protection", "Performance Monitoring & Analytics"],
+           technologies: ["Google Analytics", "CloudFlare", "SSL Certificates", "Performance Monitoring"],
+           projects: ["Performance Optimization", "SEO Strategies", "Security Solutions"]
+         }
       ],
 
       websiteTypesTitle: "Types of Websites We Create",
@@ -154,19 +154,19 @@ const Web = () => {
       digitalReadinessDescription: "في عالم اليوم الذي يعطي الأولوية للرقمية، وجود حضور قوي على الإنترنت ليس اختياريا، إنه ضروري. نحن نقدم خدمات التحول الرقمي الشاملة التي تضع عملك في موقع النجاح في المشهد الرقمي.",
 
       servicesTitle: "خدمات الويب لدينا",
-      services: [
-        {
-          icon: Briefcase,
-          title: "مواقع الشركات",
-          description: "مواقع شركات احترافية تؤسس المصداقية وتعرض علامتك التجارية بأناقة.",
-          features: ["تصميم متجاوب", "تكامل نظام إدارة المحتوى", "تحسين محركات البحث", "اتساق العلامة التجارية"],
-          technologies: ["React", "Next.js", "WordPress", "Headless CMS"],
-          projects: ["ملفات الشركات", "معارض الخدمات", "عروض الفرق"]
-        },
+       services: [
+         {
+           icon: Briefcase,
+           title: "تصميم الهوية الرقمية والمواقع المؤسسية",
+           description: "مواقع شركات احترافية وتصميم هوية رقمية شاملة تؤسس المصداقية وتعزز حضورك الرقمي.",
+           features: ["تصميم الشعار والهوية البصرية", "مواقع مؤسسية متكاملة", "تحسين محركات البحث والأداء", "استراتيجية المحتوى والأمان"],
+           technologies: ["React", "Next.js", "WordPress", "Headless CMS"],
+           projects: ["هويات العلامات التجارية", "المواقع المؤسسية", "الاستراتيجيات الرقمية"]
+         },
         {
           icon: ShoppingCart,
           title: "منصات التجارة الإلكترونية",
-          description: "حلول تجارة إلكترونية متكاملة تحول الزوا�� إلى عملاء بتجربة تسوق سلسة.",
+          description: "حلول تجارة إلكترونية متكاملة تحول الزوار إلى عملاء بتجربة تسوق سلسة.",
           features: ["عربة التسوق", "بوابات الدفع", "إدارة المخزون", "تتبع الطلبات"],
           technologies: ["Shopify", "WooCommerce", "Magento", "حلول مخصصة"],
           projects: ["متاجر إلكترونية", "منصات B2B", "أسواق إلكترونية"]
@@ -195,14 +195,14 @@ const Web = () => {
           technologies: ["تطبيقات الويب التقدمية", "React Native", "Flutter", "Ionic"],
           projects: ["مواقع محمولة", "تطبيقات الويب التقدمية", "تطبيقات هجينة"]
         },
-        {
-          icon: Search,
-          title: "SEO والتسويق الرقمي",
-          description: "خدمات SEO والتسويق الرقمي الشاملة لزيادة الرؤية وجذب حركة مرور مؤهلة.",
-          features: ["بحث الكلمات المفتاحية", "SEO الداخلي", "استراتيجية المحتوى", "التحليلات"],
-          technologies: ["Google Analytics", "Search Console", "SEMrush", "Ahrefs"],
-          projects: ["حملات SEO", "تسويق المحتوى", "SEO المحلي"]
-        }
+         {
+           icon: Search,
+           title: "تحسين الأداء والأمان الرقمي",
+           description: "خدمات شاملة لتحسين أداء الموقع وحمايته وزيادة الرؤية في محركات البحث.",
+           features: ["تحسين سرعة التحميل", "تحسين محركات البحث", "الأمان والحماية", "مراقبة الأداء والتحليلات"],
+           technologies: ["Google Analytics", "CloudFlare", "SSL Certificates", "Performance Monitoring"],
+           projects: ["تحسين الأداء", "استراتيجيات SEO", "حلول الأمان"]
+         }
       ],
 
       websiteTypesTitle: "أنواع المواقع التي ننشئها",
@@ -223,7 +223,7 @@ const Web = () => {
           features: ["معارض المشاريع", "دراسات الحالة", "شهادات العملاء", "نماذج الاتصال"]
         },
         {
-          type: "ا��حجوزات",
+          type: "الحجوزات",
           description: "أنظمة مواعيد وحجوزات لشركات الخدمات",
           features: ["تكامل التقويم", "معالجة الدفع", "إشعارات آلية", "إدارة العملاء"]
         },

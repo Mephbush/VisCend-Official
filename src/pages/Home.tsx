@@ -40,14 +40,14 @@ const Home = () => {
       ],
       webTitle: "Web",
       webDescription: "Digital solutions that drive your business forward",
-      webServices: [
-        "Corporate Websites",
-        "E-Commerce Platforms",
-        "Portfolio Sites",
-        "Custom Web Apps",
-        "Digital Marketing",
-        "SEO Optimization"
-      ],
+       webServices: [
+         "Brand Identity & Digital Presence",
+         "E-Commerce Platforms", 
+         "Portfolio & Showcase Sites",
+         "Custom Web Applications",
+         "Performance & SEO Optimization",
+         "Security & Digital Protection"
+       ],
       
       // Why Choose Us
       whyChooseTitle: "Why Choose VisCend?",
@@ -91,24 +91,24 @@ const Home = () => {
       servicesSubtitle: "قسمان قويان، إمكانيات لا محدودة",
       studioTitle: "الاستوديو",
       studioDescription: "إنتاج مرئي سينمائي يحكي قصتك",
-      studioServices: [
-        "المؤثرات البصرية والرسوم المتحركة",
-        "الرسوم ثلاثية الأبعاد",
-        "الجرافيك المتحرك",
+       studioServices: [
+         "المؤثرات البصرية والرسوم الحاسوبية",
+         "الرسوم المتحركة ثلاثية الأبعاد",
+         "موشن جرافيك",
         "أفلام العلامات التجارية",
         "الفيديوهات الإعلانية",
         "ما بعد الإنتاج"
       ],
       webTitle: "الويب",
       webDescription: "حلول رقمية تدفع عملك إلى الأمام",
-      webServices: [
-        "المواقع المؤسسية",
-        "منصات التجارة الإلكترونية",
-        "مواقع المعارض",
-        "تطبيقات الويب المخصصة",
-        "التسويق الرقمي",
-        "تحسين محركات البحث"
-      ],
+       webServices: [
+         "تصميم المواقع والهوية الرقمية",
+         "منصات التجارة الإلكترونية",
+         "مواقع المعارض والمحافظ",
+         "تطبيقات الويب المخصصة",
+         "الأداء وتحسين محركات البحث",
+         "الأمان والحماية الرقمية"
+       ],
       
       // Why Choose Us
       whyChooseTitle: "لماذا تختار VisCend؟",

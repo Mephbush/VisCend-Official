@@ -87,11 +87,11 @@ const Services = () => {
           description: "Design and build websites optimized for mobile and desktop with fast performance and touch-friendly interactions — focused on web standards and progressive enhancement.",
           features: ["Responsive Layout", "Performance Optimization", "Progressive Enhancement"]
         },
-        {
-          title: "Digital Presence & Brand Identity",
-          description: "We combine design, messaging and product to build a coherent digital identity and strong online presence.",
-          features: ["Brand Strategy", "Visual Identity", "Content Guidance", "Go-to-market Support"]
-        }
+         {
+           title: "Digital Presence & Brand Identity",
+           description: "We combine design, messaging and product to build a coherent digital identity and strong online presence.",
+           features: ["Brand Strategy", "Visual Identity", "Content Guidance", "Go-to-market Support"]
+         }
       ],
 
       // packages removed — offerings are presented as independent services and digital presence solutions
@@ -144,9 +144,9 @@ const Services = () => {
           description: "رسوم ثلاثية الأبعاد إنتاجية تبرز المنتجات والشخصيات بأعلى جودة.",
           features: ["رسوم الشخصيات المتحركة", "تصور المنتجات", "جولات معمارية", "التقاط الحركة"]
         },
-        {
-          title: "الرسوم المتحركة الحركية",
-          description: "تصميم حركة واضح ومتناسق يعزز رسالتك البصرية.",
+         {
+           title: "موشن جرافيك",
+           description: "تصميم حركة واضح ومتناسق يعزز رسالتك البصرية.",
           features: ["رسوم متحركة ثنائية الأبعاد", "طباعة حركية", "شعارات متحركة", "تصميم إنفوجرافيك"]
         },
         {
@@ -185,18 +185,18 @@ const Services = () => {
         {
           title: "تطبيقات ويب مخصصة",
           description: "تطبيقات مصممة بمعمارية قابلة للتوسع، امان عال واداء محسن لحالات الاستخدام المعقدة.",
-          features: ["تصميم قواعد بيانات", "��اجهات برمجة تطبيقات مخصصة", "مصادقة وصلاحيات", "البنية التحتية القابلة للتوسع"]
+          features: ["تصميم قواعد بيانات", "واجهات برمجة تطبيقات مخصصة", "مصادقة وصلاحيات", "البنية التحتية القابلة للتوسع"]
         },
         {
           title: "تجارب موبايل-أولاً",
           description: "تصميم وبناء تجارب تعمل بشكل مثالي على الهواتف مع أداء قريب من تطبيقات الهواتف.",
           features: ["تصميم متجاوب", "تحسين اللمس", "تحسين الأداء"]
         },
-        {
-          title: "الهوية الرقمية وبناء الحضور",
-          description: "نساعدك في بناء هوية رقمية متكاملة تجمع الرسالة، التصاميم ومنتجك لوجود رقمي مقنع وواضح.",
-          features: ["استراتيجية العلامة", "هوية بصرية", "إرشاد المحتوى", "دعم إطلاق المنتج"]
-        }
+         {
+           title: "الهوية الرقمية وبناء الحضور",
+           description: "نساعدك في بناء هوية رقمية متكاملة تجمع الرسالة، التصاميم ومنتجك لوجود رقمي مقنع وواضح.",
+           features: ["استراتيجية العلامة", "هوية بصرية", "إرشاد المحتوى", "دعم إطلاق المنتج"]
+         }
       ],
 
       // تم إزالة حزم الخدمات — العروض الآن معروضة كخدمات مستقلة وحلول لبناء الهوية والحضور الرقمي
