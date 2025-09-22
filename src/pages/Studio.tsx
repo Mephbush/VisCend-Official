@@ -205,7 +205,7 @@ const Studio = () => {
     {
       id: "beyond-horizon",
       title: language === 'ar' ? 'ما وراء أفق الزمن' : 'Beyond the Horizon of Time',
-      category: language === 'ar' ? 'رسوم متحركة ثلاثية الأبعاد' : '3D Animation',
+      category: language === 'ar' ? 'الاستوديو' : 'Studio',
       description: language === 'ar' 
         ? 'فيلم قصير ثلاثي الأبعاد يتبع رحلة سيارة بي إم دبليو عبر بوابة زمنية'
         : 'A 3D short film following a BMW\'s journey through a time portal',

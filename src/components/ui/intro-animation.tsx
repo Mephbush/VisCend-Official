@@ -14,12 +14,12 @@ const IntroAnimation = ({ onComplete, language = "en" }: IntroAnimationProps) =>
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStage(1), 300),   // Background particles
-      setTimeout(() => setStage(2), 800),   // Logo entrance
-      setTimeout(() => setStage(3), 1400),  // Text reveal
-      setTimeout(() => setStage(4), 2200),  // Final effect
-      setTimeout(() => setStage(5), 3000),  // Exit animation
-      setTimeout(() => onComplete(), 3600), // Complete
+      setTimeout(() => setStage(1), 200),   // Background particles
+      setTimeout(() => setStage(2), 600),   // Logo entrance
+      setTimeout(() => setStage(3), 1200),  // Text reveal
+      setTimeout(() => setStage(4), 1800),  // Final effect
+      setTimeout(() => setStage(5), 2600),  // Exit animation
+      setTimeout(() => onComplete(), 3200), // Complete
     ];
 
     return () => timers.forEach(clearTimeout);
@@ -32,7 +32,7 @@ const IntroAnimation = ({ onComplete, language = "en" }: IntroAnimationProps) =>
     <div className={cn(
       "fixed inset-0 z-[100] flex items-center justify-center overflow-hidden",
       "bg-black",
-      "transition-all duration-1000 ease-in-out",
+      "transition-all duration-700 ease-in-out",
       stage === 5 && "opacity-0 pointer-events-none"
     )}>
       {/* Animated particles background */}

@@ -264,14 +264,14 @@ const Services = () => {
           </div>
 
           <Tabs defaultValue="studio" className="max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2 glass">
-              <TabsTrigger value="studio" className="flex items-center space-x-2">
+            <TabsList className="grid w-full grid-cols-2 glass border-2 border-primary/30 bg-background/50 rounded-xl shadow-lg shadow-primary/20">
+              <TabsTrigger value="studio" className="flex items-center space-x-2 data-[state=active]:bg-primary data-[state=active]:text-white transition-all duration-300 hover:scale-105">
                 <Sparkles className="h-4 w-4" />
-                <span>{t.studioTab}</span>
+                <span className="font-semibold">{t.studioTab}</span>
               </TabsTrigger>
-              <TabsTrigger value="web" className="flex items-center space-x-2">
+              <TabsTrigger value="web" className="flex items-center space-x-2 data-[state=active]:bg-secondary data-[state=active]:text-white transition-all duration-300 hover:scale-105">
                 <Eye className="h-4 w-4" />
-                <span>{t.webTab}</span>
+                <span className="font-semibold">{t.webTab}</span>
               </TabsTrigger>
             </TabsList>
 

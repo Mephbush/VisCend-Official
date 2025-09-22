@@ -320,10 +320,6 @@ const Portfolio = () => {
                       </div>
                     </div>
                     
-                    <div className="flex items-center text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      {language === 'ar' ? '2024' : '2024'}
-                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -422,10 +418,6 @@ const Portfolio = () => {
                       </div>
                     </div>
                     
-                    <div className="flex items-center text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      {language === 'ar' ? '2024' : '2024'}
-                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -555,11 +547,6 @@ const Portfolio = () => {
                         </div>
                       )}
                       
-                      {/* Date */}
-                      <div className="flex items-center text-xs text-muted-foreground">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        {new Date(item.created_at).toLocaleDateString()}
-                      </div>
                     </div>
                   </CardContent>
                 </Card>

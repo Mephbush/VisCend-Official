@@ -19,15 +19,10 @@ const Layout = () => {
   // Track visitor data
   useVisitorTracking();
 
-  // Check if this is the first visit first
+  // Show intro on every visit for now
   useEffect(() => {
-    const hasVisited = localStorage.getItem('viscend-visited');
-    if (hasVisited) {
-      setShowIntro(false);
-    } else {
-      // Ensure intro shows on first visit
-      setShowIntro(true);
-    }
+    // Always show intro animation
+    setShowIntro(true);
   }, []);
 
   // Apply theme to document

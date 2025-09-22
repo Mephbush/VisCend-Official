@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Moon, Sun, Globe } from "lucide-react";
+import { Menu, Moon, Sun, Globe, Languages } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavigationProps {
@@ -115,7 +115,7 @@ const Navigation = ({ language, onLanguageChange, theme, onThemeChange }: Naviga
               onClick={() => onLanguageChange(language === "en" ? "ar" : "en")}
               className="hidden md:flex items-center space-x-2 hover:bg-muted/10"
             >
-              <Globe className="h-4 w-4" />
+              <Languages className="h-4 w-4" />
               <span className="text-sm font-medium">
                 {language === "en" ? "العربية" : "English"}
               </span>
@@ -188,7 +188,7 @@ const Navigation = ({ language, onLanguageChange, theme, onThemeChange }: Naviga
                       onClick={() => onLanguageChange(language === "en" ? "ar" : "en")}
                       className="justify-start"
                     >
-                      <Globe className="h-4 w-4 mr-2" />
+                      <Languages className="h-4 w-4 mr-2" />
                       {language === "en" ? "العربية" : "English"}
                     </Button>
                     

@@ -62,11 +62,12 @@ export const ProjectModal = ({ project, children, language }: ProjectModalProps)
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <div className="cursor-pointer">
+        <div className="cursor-pointer w-full h-full">
           {children}
         </div>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl w-full h-[90vh] p-0 glass border-border/20">
+      <DialogContent className="max-w-4xl w-full h-[90vh] p-0 glass border-border/20" 
+        onClick={(e) => e.stopPropagation()}>
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-border/20">
@@ -161,11 +162,6 @@ export const ProjectModal = ({ project, children, language }: ProjectModalProps)
                       <Badge variant="secondary">{project.type}</Badge>
                     </div>
                     
-                    <div className="flex items-center space-x-3">
-                      <Calendar className="h-4 w-4 text-accent" />
-                      <span className="text-sm text-muted-foreground">{t.date}:</span>
-                      <span className="text-sm">{project.date}</span>
-                    </div>
                   </div>
 
                   {/* Technologies */}
