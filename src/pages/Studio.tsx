@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ProjectModal } from "@/components/ui/project-modal";
 import { 
   Sparkles, 
   Play, 
@@ -12,7 +13,9 @@ import {
   Palette,
   Film,
   Zap,
-  Eye
+  Eye,
+  Calendar,
+  ExternalLink
 } from "lucide-react";
 
 const Studio = () => {
@@ -100,6 +103,7 @@ const Studio = () => {
       ],
 
       portfolioTitle: "Featured Studio Work",
+      viewFullPortfolio: "View Full Portfolio",
       
       ctaTitle: "Ready to Create Something Spectacular?",
       ctaDescription: "Let's bring your vision to life with cinematic quality",
@@ -186,6 +190,7 @@ const Studio = () => {
       ],
 
       portfolioTitle: "أعمال الاستوديو المميزة",
+      viewFullPortfolio: "عرض المعرض الكامل",
       
       ctaTitle: "هل أنت مستعد لصنع شيء مذهل؟",
       ctaDescription: "دعنا نحقق رؤيتك بجودة سينمائية",
@@ -195,31 +200,23 @@ const Studio = () => {
 
   const t = content[language];
 
-  // Sample portfolio items
+  // Real portfolio items
   const portfolioItems = [
     {
-      id: 1,
-      title: "Luxury Car Commercial",
-      category: "VFX & CGI",
-      description: "High-end automotive commercial with photorealistic VFX",
-      image: "/api/placeholder/600/400",
-      tags: ["VFX", "CGI", "Automotive"]
-    },
-    {
-      id: 2,
-      title: "Brand Animation",
-      category: "3D Animation",
-      description: "Character-driven brand story with 3D animation",
-      image: "/api/placeholder/600/400",
-      tags: ["3D", "Character", "Branding"]
-    },
-    {
-      id: 3,
-      title: "Corporate Identity",
-      category: "Motion Graphics",
-      description: "Dynamic logo animation and brand guidelines",
-      image: "/api/placeholder/600/400",
-      tags: ["Logo", "Motion", "Corporate"]
+      id: "beyond-horizon",
+      title: language === 'ar' ? 'ما وراء أفق الزمن' : 'Beyond the Horizon of Time',
+      category: language === 'ar' ? 'رسوم متحركة ثلاثية الأبعاد' : '3D Animation',
+      description: language === 'ar' 
+        ? 'فيلم قصير ثلاثي الأبعاد يتبع رحلة سيارة بي إم دبليو عبر بوابة زمنية'
+        : 'A 3D short film following a BMW\'s journey through a time portal',
+      longDescription: language === 'ar'
+        ? 'عمل سينمائي ثلاثي الأبعاد متطور يجمع بين تقنيات الرسوم المتحركة المتقدمة والمؤثرات البصرية المذهلة. يحكي الفيلم قصة رحلة استثنائية عبر الزمن، حيث تصبح سيارة بي إم دبليو العادية جزءاً من مغامرة خيالية تحولها إلى مركبة الأبطال الخارقين الشهيرة "باتموبايل".'
+        : 'An advanced 3D cinematic work that combines cutting-edge animation techniques with stunning visual effects. The film tells the story of an extraordinary journey through time, where an ordinary BMW becomes part of a fantasy adventure that transforms it into the famous superhero vehicle "Batmobile".',
+      embedCode: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/1deJM-7X9oo" title="VisCend - Beyond The Horizon of Time" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+      technologies: ["3D Animation", "VFX", "Motion Graphics", "Cinema 4D", "After Effects", "Premiere Pro"],
+      date: "2024",
+      type: language === 'ar' ? 'فيلم قصير ثلاثي الأبعاد' : '3D Short Film',
+      tags: ["3D Animation", "VFX", "Cinema 4D"]
     }
   ];
 
@@ -359,41 +356,68 @@ const Studio = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {portfolioItems.map((item, index) => (
-              <Card 
-                key={item.id} 
-                className="glass border-border/20 hover:border-primary/30 transition-all duration-300 group hover:scale-105 animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+              <ProjectModal
+                key={item.id}
+                project={item}
+                language={language}
               >
-                <CardContent className="p-0">
-                  <div className="relative overflow-hidden rounded-t-lg">
-                    <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                      <Play className="h-12 w-12 text-white opacity-80 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-primary/20 text-primary border-primary/30">
-                        {item.category}
-                      </Badge>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 text-neon-primary group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
-                      {item.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
+                <Card 
+                  className="glass border-border/20 hover:border-primary/30 transition-all duration-300 group hover:scale-105 animate-fade-in-up cursor-pointer"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <CardContent className="p-0">
+                    <div className="relative overflow-hidden rounded-t-lg">
+                      <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                        <Play className="h-12 w-12 text-white opacity-80 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-primary/20 text-primary border-primary/30">
+                          {item.category}
                         </Badge>
-                      ))}
+                      </div>
+                      
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                            <Eye className="h-6 w-6 text-white" />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                    
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold mb-2 text-neon-primary group-hover:text-primary transition-colors">
+                        {item.title}
+                      </h3>
+                      <p className="text-muted-foreground mb-4 leading-relaxed">
+                        {item.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {item.tags.map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </ProjectModal>
             ))}
+          </div>
+
+          {/* View Full Portfolio Button */}
+          <div className="text-center mt-12">
+            <Button
+              asChild
+              size="lg"
+              className="btn-cinematic text-white border-none hover:scale-105 transition-transform"
+            >
+              <Link to="/portfolio">
+                {t.viewFullPortfolio}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
 
           <div className="text-center mt-12">
