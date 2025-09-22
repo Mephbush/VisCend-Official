@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface VisitorData {
   ip_address?: string;
@@ -116,14 +117,34 @@ export const useVisitorTracking = () => {
           ...deviceInfo
         };
 
-        // Store visitor data (will be implemented once database table is created)
+        // Store visitor data in Supabase
         console.log('Visitor data collected:', visitorData);
         
-        // TODO: Implement database storage once site_visitors table is created
-        // await supabase.from('site_visitors').insert([{
-        //   ...visitorData,
-        //   visit_timestamp: new Date().toISOString()
-        // }]);
+        try {
+          const { error } = await supabase.from('site_visits').insert([{
+            session_id: visitorData.session_id,
+            ip_address: visitorData.ip_address,
+            user_agent: visitorData.user_agent,
+            screen_resolution: visitorData.screen_resolution,
+            timezone: visitorData.timezone,
+            language: visitorData.language,
+            referrer: visitorData.referrer,
+            page_path: visitorData.page_path,
+            page_title: document.title,
+            country: visitorData.country,
+            city: visitorData.city,
+            device_type: visitorData.device_type,
+            browser: visitorData.browser,
+            operating_system: visitorData.os,
+            is_returning_visitor: localStorage.getItem('has_visited') === 'true'
+          }]);
+
+          if (!error) {
+            localStorage.setItem('has_visited', 'true');
+          }
+        } catch (error) {
+          console.log('Error storing visitor data:', error);
+        }
 
       } catch (error) {
         console.log('Visitor tracking error:', error);
@@ -138,11 +159,18 @@ export const useVisitorTracking = () => {
         const sessionId = getSessionId();
         console.log('Visit duration:', visit_duration, 'seconds for session:', sessionId);
         
-        // TODO: Update database with visit duration once table is created
-        // await supabase.from('site_visitors')
-        //   .update({ visit_duration })
-        //   .eq('session_id', sessionId)
-        //   .eq('page_path', window.location.pathname);
+        // Update database with visit duration
+        try {
+          await supabase.from('site_visits')
+            .update({ 
+              visit_duration,
+              ended_at: new Date().toISOString()
+            })
+            .eq('session_id', sessionId)
+            .eq('page_path', window.location.pathname);
+        } catch (error) {
+          console.log('Error updating visit duration:', error);
+        }
       } catch (error) {
         console.log('Duration tracking error:', error);
       }
