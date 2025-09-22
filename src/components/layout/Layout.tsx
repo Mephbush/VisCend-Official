@@ -19,9 +19,22 @@ const Layout = () => {
   // Track visitor data
   useVisitorTracking();
 
-  // Disable intro in design environments (Builder preview) to avoid overlaying design canvas
+  // Check if this is the first visit first
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.href.includes('builder')) {
+    const hasVisited = localStorage.getItem('viscend-visited');
+    if (hasVisited) {
+      setShowIntro(false);
+    } else {
+      // Ensure intro shows on first visit
+      setShowIntro(true);
+    }
+  }, []);
+
+  // Only disable intro in actual builder/design environments, not preview
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 
+        window.location.href.includes('builder') && 
+        !window.location.href.includes('lovableproject.com')) {
       setShowIntro(false);
       // In Builder design mode client-side scripts may not run — ensure animations are visible there
       try {
@@ -43,17 +56,6 @@ const Layout = () => {
     root.dir = language === "ar" ? "rtl" : "ltr";
     root.lang = language;
   }, [language]);
-
-  // Check if this is the first visit
-  useEffect(() => {
-    const hasVisited = localStorage.getItem('viscend-visited');
-    if (hasVisited) {
-      setShowIntro(false);
-    } else {
-      // Ensure intro shows on first visit
-      setShowIntro(true);
-    }
-  }, []);
 
   // Show a lightweight page loader for client-side navigation (distinct from intro)
   useEffect(() => {
