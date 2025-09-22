@@ -225,75 +225,164 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Coming Soon Section */}
+      {/* Featured Projects Section */}
       <section className="py-16 bg-card/20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient-primary">
-              {language === 'ar' ? 'قادم قريباً' : 'Coming Soon'}
+              {language === 'ar' ? 'مشاريع مميزة' : 'Featured Projects'}
             </h2>
             <p className="text-muted-foreground">
               {language === 'ar' 
-                ? 'مشاريع جديدة ومثيرة في الطريق' 
-                : 'Exciting new projects on the way'
+                ? 'استكشف أحدث أعمالنا المتميزة' 
+                : 'Explore our latest featured work'
               }
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {/* Website Projects */}
-            <Card className="glass border-border/20 hover:border-primary/30 transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Eye className="h-8 w-8 text-primary" />
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* Beyond the Horizon of Time - 3D Film */}
+            <Card className="glass border-border/20 hover:border-primary/30 transition-all duration-300 group">
+              <CardContent className="p-0">
+                <div className="relative overflow-hidden rounded-t-lg">
+                  <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative">
+                    <iframe 
+                      className="absolute inset-0 w-full h-full rounded-t-lg"
+                      src="https://www.youtube.com/embed/1deJM-7X9oo" 
+                      title="VisCend - Beyond The Horizon of Time" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                      allowFullScreen
+                    />
+                  </div>
+                  
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-accent/90 text-white">
+                      Featured
+                    </Badge>
+                  </div>
+                  
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-primary/20 text-primary border-primary/30">
+                      Studio
+                    </Badge>
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-neon-primary mb-2">
-                  {language === 'ar' ? 'مشاريع مواقع جديدة' : 'New Website Projects'}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {language === 'ar' 
-                    ? 'مواقع إلكترونية احترافية جاهزة للعرض'
-                    : 'Professional websites ready for showcase'
-                  }
-                </p>
+                
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-neon-primary group-hover:text-primary transition-colors mb-3">
+                    {language === 'ar' ? 'ما وراء أفق الزمن' : 'Beyond the Horizon of Time'}
+                  </h3>
+                  
+                  <p className="text-sm text-secondary font-medium mb-3">
+                    {language === 'ar' ? 'فيلم قصير ثلاثي الأبعاد' : '3D Short Film'}
+                  </p>
+                  
+                  <p className="text-muted-foreground mb-4 leading-relaxed">
+                    {language === 'ar' 
+                      ? 'فيلم قصير ثلاثي الأبعاد يتبع رحلة سيارة بي إم دبليو عبر بوابة زمنية، حيث تتحول إلى باتموبايل وتدخل عالماً جديداً من الخيال والمغامرة'
+                      : 'A 3D short film following a BMW\'s journey through a time portal, transforming into a Batmobile and entering a new world of fantasy and adventure'
+                    }
+                  </p>
+                  
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1">
+                      <Badge variant="secondary" className="text-xs">3D Animation</Badge>
+                      <Badge variant="secondary" className="text-xs">VFX</Badge>
+                      <Badge variant="secondary" className="text-xs">Motion Graphics</Badge>
+                      <Badge variant="secondary" className="text-xs">Cinema 4D</Badge>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center text-xs text-muted-foreground">
+                    <Calendar className="h-3 w-3 mr-1" />
+                    {language === 'ar' ? '2024' : '2024'}
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
-            {/* Trailer Video */}
-            <Card className="glass border-border/20 hover:border-primary/30 transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Play className="h-8 w-8 text-primary" />
+            {/* Bella Vista Restaurant Website */}
+            <Card className="glass border-border/20 hover:border-primary/30 transition-all duration-300 group">
+              <CardContent className="p-0">
+                <div className="relative overflow-hidden rounded-t-lg">
+                  <img 
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                    alt="Bella Vista Restaurant" 
+                    className="aspect-video w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-accent/90 text-white">
+                      Featured
+                    </Badge>
+                  </div>
+                  
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-secondary/20 text-secondary border-secondary/30">
+                      Web
+                    </Badge>
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-neon-primary mb-2">
-                  {language === 'ar' ? 'فيديو تريلر' : 'Trailer Video'}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {language === 'ar' 
-                    ? 'فيديو ترويجي احترافي جاهز للعرض'
-                    : 'Professional promotional video ready to launch'
-                  }
-                </p>
+                
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-xl font-bold text-neon-primary group-hover:text-primary transition-colors">
+                      {language === 'ar' ? 'مطعم بيلا فيستا' : 'Bella Vista Restaurant'}
+                    </h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      asChild
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <a 
+                        href="https://rescend.netlify.app" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Button>
+                  </div>
+                  
+                  <p className="text-sm text-secondary font-medium mb-3">
+                    {language === 'ar' ? 'موقع إلكتروني للمطاعم' : 'Restaurant Website'}
+                  </p>
+                  
+                  <p className="text-muted-foreground mb-4 leading-relaxed">
+                    {language === 'ar' 
+                      ? 'موقع إلكتروني أنيق لمطعم راقي يتميز بنظام حجوزات متطور وعرض تفاعلي للقائمة مع تجربة مستخدم استثنائية'
+                      : 'An elegant website for a fine dining restaurant featuring an advanced reservation system and interactive menu display with exceptional user experience'
+                    }
+                  </p>
+                  
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1">
+                      <Badge variant="secondary" className="text-xs">React</Badge>
+                      <Badge variant="secondary" className="text-xs">TypeScript</Badge>
+                      <Badge variant="secondary" className="text-xs">Tailwind CSS</Badge>
+                      <Badge variant="secondary" className="text-xs">Responsive Design</Badge>
+                      <Badge variant="secondary" className="text-xs">Booking System</Badge>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center text-xs text-muted-foreground">
+                    <Calendar className="h-3 w-3 mr-1" />
+                    {language === 'ar' ? '2024' : '2024'}
+                  </div>
+                </div>
               </CardContent>
             </Card>
+          </div>
 
-            {/* More Projects */}
-            <Card className="glass border-border/20 hover:border-primary/30 transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Tag className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-lg font-bold text-neon-primary mb-2">
-                  {language === 'ar' ? 'مشاريع إضافية' : 'Additional Projects'}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {language === 'ar' 
-                    ? 'المزيد من المشاريع المبتكرة في التطوير'
-                    : 'More innovative projects in development'
-                  }
-                </p>
-              </CardContent>
-            </Card>
+          {/* Coming Soon Hint */}
+          <div className="text-center mt-12">
+            <p className="text-sm text-muted-foreground">
+              {language === 'ar' 
+                ? 'المزيد من المشاريع المثيرة قادمة قريباً...' 
+                : 'More exciting projects coming soon...'
+              }
+            </p>
           </div>
         </div>
       </section>

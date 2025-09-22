@@ -150,30 +150,26 @@ const Home = () => {
   const featuredProjects = [
     {
       id: 1,
-      title: "Luxury Brand Campaign",
-      category: "Studio",
-      type: "VFX & Animation",
-      description: "Cinematic brand film showcasing luxury automotive excellence",
-      image: "/api/placeholder/600/400",
-      tags: ["VFX", "Motion Graphics", "Color Grading"]
+      title: language === 'ar' ? 'ما وراء أفق الزمن' : 'Beyond the Horizon of Time',
+      category: 'Studio',
+      type: language === 'ar' ? 'فيلم قصير ثلاثي الأبعاد' : '3D Short Film',
+      description: language === 'ar' 
+        ? 'فيلم قصير ثلاثي الأبعاد يتبع رحلة سيارة بي إم دبليو عبر بوابة زمنية، حيث تتحول إلى باتموبايل وتدخل عالماً جديداً'
+        : 'A 3D short film following a BMW\'s journey through a time portal, transforming into a Batmobile and entering a new world',
+      videoEmbed: 'https://www.youtube.com/embed/1deJM-7X9oo',
+      tags: ['3D Animation', 'VFX', 'Motion Graphics', 'Cinema 4D']
     },
     {
       id: 2,
-      title: "E-Commerce Platform",
-      category: "Web",
-      type: "Full-Stack Development",
-      description: "Complete digital transformation for retail business",
-      image: "/api/placeholder/600/400",
-      tags: ["React", "Node.js", "E-Commerce"]
-    },
-    {
-      id: 3,
-      title: "3D Product Visualization",
-      category: "Studio",
-      type: "3D Animation",
-      description: "Interactive 3D showcase for product launches",
-      image: "/api/placeholder/600/400",
-      tags: ["3D Modeling", "Animation", "Rendering"]
+      title: language === 'ar' ? 'مطعم بيلا فيستا' : 'Bella Vista Restaurant',
+      category: 'Web',
+      type: language === 'ar' ? 'موقع إلكتروني للمطاعم' : 'Restaurant Website',
+      description: language === 'ar'
+        ? 'موقع إلكتروني أنيق لمطعم راقي يتميز بنظام حجوزات متطور وعرض تفاعلي للقائمة مع تجربة مستخدم استثنائية'
+        : 'An elegant website for a fine dining restaurant featuring an advanced reservation system and interactive menu display',
+      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      projectUrl: 'https://rescend.netlify.app',
+      tags: ['React', 'TypeScript', 'Tailwind CSS', 'Booking System']
     }
   ];
 
@@ -194,7 +190,7 @@ const Home = () => {
             </p>
           </div>
 
-          <ScrollRevealGroup className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" stagger={0.12} direction="up">
+          <ScrollRevealGroup className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto" stagger={0.12} direction="up">
             {featuredProjects.map((project, index) => (
               <Card
                 key={project.id}
@@ -202,18 +198,50 @@ const Home = () => {
               >
                 <CardContent className="p-0">
                   <div className="relative overflow-hidden rounded-t-lg">
-                    <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                      <Play className="h-12 w-12 text-white opacity-80 group-hover:opacity-100 transition-opacity" />
-                    </div>
+                    {project.videoEmbed ? (
+                      <div className="aspect-video relative">
+                        <iframe 
+                          className="absolute inset-0 w-full h-full rounded-t-lg"
+                          src={project.videoEmbed} 
+                          title={project.title} 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                          allowFullScreen
+                        />
+                      </div>
+                    ) : (
+                      <img 
+                        src={project.image}
+                        alt={project.title}
+                        className="aspect-video w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    )}
                     <div className="absolute top-4 left-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                         project.category === 'Studio'
-                          ? 'bg-primary/20 text-primary'
-                          : 'bg-secondary/20 text-secondary'
+                          ? 'bg-primary/20 text-primary border border-primary/30'
+                          : 'bg-secondary/20 text-secondary border border-secondary/30'
                       }`}>
                         {project.category}
                       </span>
                     </div>
+                    {project.projectUrl && (
+                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          asChild
+                          className="bg-black/50 hover:bg-black/70"
+                        >
+                          <a 
+                            href={project.projectUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                          >
+                            <Eye className="h-4 w-4 text-white" />
+                          </a>
+                        </Button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="p-6">
@@ -240,6 +268,31 @@ const Home = () => {
                 </CardContent>
               </Card>
             ))}
+            
+            {/* Coming Soon Placeholder */}
+            <div className="md:col-span-2 lg:col-span-1">
+              <Card className="glass border-border/20 hover:border-primary/30 transition-all duration-300 group">
+                <CardContent className="p-6 text-center">
+                  <div className="aspect-video bg-gradient-to-br from-accent/10 to-primary/10 rounded-lg flex items-center justify-center mb-6">
+                    <div className="text-center">
+                      <Sparkles className="h-12 w-12 text-primary opacity-50 mx-auto mb-4" />
+                      <p className="text-muted-foreground">
+                        {language === 'ar' ? 'المزيد من المشاريع قادمة...' : 'More projects coming...'}
+                      </p>
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-bold text-neon-primary mb-2">
+                    {language === 'ar' ? 'مشاريع جديدة' : 'New Projects'}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {language === 'ar' 
+                      ? 'مشاريع مثيرة ومبتكرة في الطريق'
+                      : 'Exciting and innovative projects on the way'
+                    }
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </ScrollRevealGroup>
 
           <div className="text-center mt-12">
@@ -250,8 +303,8 @@ const Home = () => {
               asChild
             >
               <Link to="/portfolio" className="flex items-center space-x-2">
-                <span>View All Projects</span>
-                <ArrowRight className="h-4 w-4" />
+                <span>{language === 'ar' ? 'عرض جميع المشاريع' : 'View All Projects'}</span>
+                <ArrowRight className={`h-4 w-4 ${language === 'ar' ? 'rotate-180' : ''}`} />
               </Link>
             </Button>
           </div>
