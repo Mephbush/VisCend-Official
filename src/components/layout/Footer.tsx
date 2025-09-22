@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // Hosted logo URL (transparent)
 const hostedLogo = "https://cdn.builder.io/api/v1/image/assets%2F522d531155314df58f36d2874dd36af0%2F61d0cf36a2c94c91bd5ed392f155fa37?format=webp&width=800";
@@ -24,8 +24,7 @@ const Footer = ({ language }: FooterProps) => {
       studioServices: ["VFX & CGI", "3D Animation", "Motion Graphics", "Brand Storytelling"],
       webServices: ["Corporate Sites", "E-Commerce", "Portfolio Sites", "Custom Web Apps"],
       address: "Sana'a, Yemen",
-      email: "hello@viscend.com",
-      phone: "+971 50 123 4567"
+      email: "contact.viscend@gmail.com"
     },
     ar: {
       tagline: "شريكك لإبداع مرئي وابتكار تقني متكامل",
@@ -41,8 +40,7 @@ const Footer = ({ language }: FooterProps) => {
       studioServices: ["المؤثرات البصرية", "الرسوم ثلاثية الأبعاد", "الجرافيك المتحرك", "سرد العلامة التجارية"],
       webServices: ["المواقع المؤسسية", "التجارة الإلكترونية", "مواقع المعارض", "تطبيقات الويب المخصصة"],
       address: "صنعاء، اليمن",
-      email: "hello@viscend.com",
-      phone: "+971 50 123 4567"
+      email: "contact.viscend@gmail.com"
     }
   };
 
@@ -165,15 +163,6 @@ const Footer = ({ language }: FooterProps) => {
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t.email}
-                </a>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                <a
-                  href={`tel:${t.phone}`}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t.phone}
                 </a>
               </div>
             </div>

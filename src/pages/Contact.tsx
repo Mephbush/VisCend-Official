@@ -10,7 +10,6 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Mail,
-  Phone,
   MapPin,
   Clock,
   Send,
@@ -18,6 +17,7 @@ import {
   Users,
   Briefcase
 } from "lucide-react";
+import { validateEmail } from "@/utils/email-validation";
 import { cn } from "@/lib/utils";
 
 const Contact = () => {
@@ -26,7 +26,6 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
     company: "",
     service_type: "",
     message: ""
@@ -48,8 +47,6 @@ const Contact = () => {
       namePlaceholder: "Enter your full name",
       emailLabel: "Email Address",
       emailPlaceholder: "Enter your email address",
-      phoneLabel: "Phone Number",
-      phonePlaceholder: "Enter your phone number",
       companyLabel: "Company Name",
       companyPlaceholder: "Enter your company name (optional)",
       serviceLabel: "Service Type",
@@ -93,8 +90,6 @@ const Contact = () => {
       namePlaceholder: "أدخل اسمك الكامل",
       emailLabel: "عنوان البريد الإلكتروني", 
       emailPlaceholder: "أدخل عنوان بريدك الإلكتروني",
-      phoneLabel: "رقم الهاتف",
-      phonePlaceholder: "أدخل رقم هاتفك",
       companyLabel: "اسم الشركة",
       companyPlaceholder: "أدخل اسم شركتك (اختياري)",
       serviceLabel: "نوع الخدمة",
@@ -144,13 +139,24 @@ const Contact = () => {
         return;
       }
 
+      // Validate email
+      const emailValidation = validateEmail(formData.email);
+      if (!emailValidation.isValid) {
+        toast({
+          title: "Invalid Email",
+          description: emailValidation.error,
+          variant: "destructive",
+        });
+        return;
+      }
+
       // Insert into Supabase
       const { error } = await supabase
         .from('contact_inquiries')
         .insert([{
           name: formData.name,
           email: formData.email,
-          phone: formData.phone || null,
+          phone: null,
           company: formData.company || null,
           service_type: formData.service_type || 'other',
           message: formData.message,
@@ -171,7 +177,6 @@ const Contact = () => {
       setFormData({
         name: "",
         email: "",
-        phone: "",
         company: "",
         service_type: "",
         message: ""
@@ -193,14 +198,8 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      details: "hello@viscend.com",
-      action: "mailto:hello@viscend.com"
-    },
-    {
-      icon: Phone,
-      title: "Phone",
-      details: "+971 50 123 4567",
-      action: "tel:+971501234567"
+      details: "contact.viscend@gmail.com",
+      action: "mailto:contact.viscend@gmail.com"
     },
     {
       icon: MapPin,
@@ -283,21 +282,6 @@ const Contact = () => {
                       onChange={(e) => handleInputChange('email', e.target.value)}
                       className="glass border-border/20 focus:border-primary/50"
                       required
-                    />
-                  </div>
-
-                  {/* Phone */}
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-sm font-medium">
-                      {t.phoneLabel}
-                    </Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder={t.phonePlaceholder}
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="glass border-border/20 focus:border-primary/50"
                     />
                   </div>
 

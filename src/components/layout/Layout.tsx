@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import CustomCursor from "@/components/ui/custom-cursor";
 import IntroAnimation from "@/components/ui/intro-animation";
 import { cn } from "@/lib/utils";
+import { useVisitorTracking } from "@/hooks/use-visitor-tracking";
 
 const Layout = () => {
   const [language, setLanguage] = useState<"en" | "ar">("en");
@@ -14,6 +15,9 @@ const Layout = () => {
   const [isPageLoading, setIsPageLoading] = useState(false);
   const location = useLocation();
   const skipFirstNav = useRef(true);
+
+  // Track visitor data
+  useVisitorTracking();
 
   // Disable intro in design environments (Builder preview) to avoid overlaying design canvas
   useEffect(() => {
