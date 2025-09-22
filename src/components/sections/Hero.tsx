@@ -5,6 +5,7 @@ import { Play, ChevronDown, Sparkles, Code } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import AnimatedCounter from "@/components/ui/animated-counter";
 
 interface HeroProps {
   language: "en" | "ar";
@@ -19,12 +20,12 @@ const Hero = ({ language }: HeroProps) => {
       subtitle: "Your Digital Success Partner",
       title: "VisCend - Your Partner for",
       titleHighlight: "Digital Success",
-      description: "Our goal is to help you succeed in the digital world. We transform your ideas into powerful visual productions and cutting-edge web solutions that drive real results.",
+      description: "From identity to visuals to websites, we make your project thrive.",
       ctaPrimary: "Start Your Project",
       ctaSecondary: "View Our Work",
       stats: [
-        { number: "150+", label: "Projects Completed" },
-        { number: "50+", label: "Happy Clients" },
+        { number: "50+", label: "Projects Completed" },
+        { number: "37+", label: "Happy Clients" },
         { number: "5+", label: "Years Experience" },
         { number: "24/7", label: "Support Available" }
       ],
@@ -47,12 +48,12 @@ const Hero = ({ language }: HeroProps) => {
       subtitle: "شريكك في النجاح الرقمي",
       title: "فِسند - شريكك في",
       titleHighlight: "النجاح الرقمي",
-      description: "هدفنا هو مساعدتك على النجاح في العالم الرقمي. نحول أفكارك إلى إنتاج مرئي قوي وحلول ويب متطورة تحقق نتائج حقيقية.",
+      description: "من الهوية إلى المرئيات إلى المواقع، نجعل مشروعك يزدهر.",
       ctaPrimary: "ابدأ مشروعك",
       ctaSecondary: "شاهد أعمالنا",
       stats: [
-        { number: "150+", label: "مشروع مكتمل" },
-        { number: "50+", label: "عميل سعيد" },
+        { number: "50+", label: "مشروع مكتمل" },
+        { number: "37+", label: "عميل سعيد" },
         { number: "5+", label: "سنوات خبرة" },
         { number: "24/7", label: "دعم متاح" }
       ],
@@ -133,27 +134,27 @@ const Hero = ({ language }: HeroProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <span className="block text-foreground mb-2 relative z-[30]">
+              <span className="block text-foreground mb-2 relative z-[50]">
                 {t.title}
               </span>
-              <span className="block text-gradient-primary animate-gradient-shift bg-[length:200%_auto] relative z-[30]">
+              <span className="block text-gradient-primary animate-gradient-shift bg-[length:200%_auto] relative z-[50]">
                 {t.titleHighlight}
               </span>
             </motion.h1>
 
             <motion.div
-              className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-7 relative z-[10] pt-[34px] pointer-events-none"
+              className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-7 relative z-[50] pt-[34px]"
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               {language === 'en' ? (
                 <p>
-                  Our <strong>goal </strong>is to <strong>help you succeed in the digital world</strong>. We transform your ideas into powerful visual productions and cutting-edge web solutions that drive real results.
+                  {t.description}
                 </p>
               ) : (
                 <p>
-                  هدفنا هو <strong>مساعدتك على النجاح في العالم الرقمي</strong>. نحول أفكارك إلى إنتاج مرئي قوي وحلول ويب متطورة تحقق نتائج حقيقية.
+                  {t.description}
                 </p>
               )}
             </motion.div>
@@ -166,7 +167,7 @@ const Hero = ({ language }: HeroProps) => {
             >
               <Button 
                 size="lg"
-                className="btn-cinematic text-white border-none px-8 py-6 text-lg relative z-[10]"
+                className="btn-cinematic text-white border-none px-8 py-6 text-lg relative z-[50] hover:scale-105 transition-transform"
                 asChild
               >
                 <Link to="/contact">
@@ -177,10 +178,10 @@ const Hero = ({ language }: HeroProps) => {
               <Button 
                 variant="outline"
                 size="lg"
-                className="glass border-primary/30 hover:border-primary/50 px-8 py-6 text-lg relative z-[10]"
+                className="glass border-primary/30 hover:border-primary/50 hover:scale-105 transition-all duration-300 px-8 py-6 text-lg relative z-[50]"
                 asChild
               >
-                <Link to="/portfolio" className="flex items-center space-x-2">
+                <Link to="/portfolio" className={`flex items-center ${language === 'ar' ? 'gap-2 flex-row-reverse' : 'space-x-2'}`}>
                   <Play className="h-5 w-5" />
                   <span>{t.ctaSecondary}</span>
                 </Link>
@@ -210,18 +211,18 @@ const Hero = ({ language }: HeroProps) => {
                   animate={isVisible ? { x: 0, opacity: 1 } : { x: index % 2 === 0 ? -50 : 50, opacity: 0 }}
                   transition={{ duration: 0.6, delay: 0.9 + index * 0.1 }}
                 >
-                  <div className="flex items-start space-x-4">
+                  <div className={`flex items-start ${language === 'ar' ? 'gap-4 flex-row-reverse' : 'space-x-4'}`}>
                     <div className="p-3 rounded-full bg-gradient-to-br from-primary to-secondary">
                       <Icon className="h-6 w-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-2xl font-bold mb-2 text-primary group-hover:text-primary transition-colors">
+                      <h3 className={`text-2xl font-bold mb-2 text-primary group-hover:text-primary transition-colors ${language === 'ar' ? 'text-right' : ''}`}>
                         {service.title}
                       </h3>
-                      <p className="text-sm text-secondary font-medium mb-3">
+                      <p className={`text-sm text-secondary font-medium mb-3 ${language === 'ar' ? 'text-right' : ''}`}>
                         {service.subtitle}
                       </p>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className={`text-muted-foreground leading-relaxed ${language === 'ar' ? 'text-right' : ''}`}>
                         {service.description}
                       </p>
                     </div>
@@ -246,10 +247,14 @@ const Hero = ({ language }: HeroProps) => {
                 animate={isVisible ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
               >
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-2 relative z-[10]">
-                  {stat.number}
+                <div className="text-3xl md:text-4xl mb-2 relative z-[50]">
+                  <AnimatedCounter 
+                    target={parseInt(stat.number.replace('+', ''))} 
+                    suffix="+" 
+                    className="text-primary font-bold"
+                  />
                 </div>
-                <div className="text-sm text-muted-foreground relative z-[10]">
+                <div className="text-sm text-muted-foreground relative z-[50]">
                   {stat.label}
                 </div>
               </motion.div>

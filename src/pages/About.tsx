@@ -25,7 +25,7 @@ const About = () => {
       missionTitle: "Our Mission",
       missionText: "To empower businesses and creators with cutting-edge visual productions and digital solutions that inspire, engage, and deliver exceptional results.",
       visionTitle: "Our Vision",
-      visionText: "To be the leading creative digital agency that sets new standards in visual storytelling and digital innovation.",
+      visionText: "To transform how brands connect with their audiences through innovative visual storytelling and cutting-edge digital experiences.",
       goalTitle: "Our Goal",
       goalText: "To transform your digital presence through innovative visual storytelling and cutting-edge web solutions that drive measurable business growth and create lasting brand impact.",
 
@@ -70,8 +70,8 @@ const About = () => {
         },
         {
           icon: Star,
-          title: "Industry-Leading Technology",
-          description: "We use the same tools as Disney, Netflix, and Apple - ensuring premium results for every project"
+          title: "Premium Creative Solutions",
+          description: "Award-winning creative approach with cutting-edge technology to deliver exceptional visual experiences"
         },
         {
           icon: CheckCircle,
@@ -97,7 +97,7 @@ const About = () => {
       missionTitle: "مهمتنا",
       missionText: "تمكين الشركات والمبدعين بانتاج مرئي متطور وحلول رقمية تلهم وتشارك وتحقق نتائج استثنائية.",
       visionTitle: "رؤيتنا", 
-      visionText: "أن نكون الوكالة الإبداعية الرقمية الرائدة التي تضع معايير جديدة في السرد المرئي والابتكار الرقمي.",
+      visionText: "تحويل طريقة ربط العلامات التجارية مع جمهورها من خلال السرد المرئي المبتكر والتجارب الرقمية المتطورة.",
       goalTitle: "هدفنا",
       goalText: "تحويل حضورك الرقمي من خلال السرد المرئي المبتكر وحلول الويب المتطورة التي تحقق نموًا تجاريًا قابلاً للقياس وتخلق تأثيرًا دائمًا للعلامة التجارية.",
 
@@ -140,8 +140,8 @@ const About = () => {
         },
         {
           icon: Star,
-          title: "جودة حائزة على جوائز",
-          description: "جودة معترف بها من جوائز ومنصات دولية، نقدم معايير عالية في كل مشروع"
+          title: "حلول إبداعية متميزة",
+          description: "نهج إبداعي حائز على جوائز مع تقنيات متطورة لتقديم تجارب بصرية استثنائية"
         },
         {
           icon: CheckCircle,
