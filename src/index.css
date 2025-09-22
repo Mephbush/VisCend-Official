@@ -179,11 +179,13 @@ All colors MUST be HSL.
     transition: all var(--transition-normal);
     position: relative;
     overflow: hidden;
+    border: 1px solid hsl(var(--primary) / 0.3);
   }
   
   .btn-cinematic:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.02);
     box-shadow: var(--shadow-cinematic), var(--glow-primary);
+    border-color: hsl(var(--primary) / 0.6);
   }
   
   .btn-cinematic::before {
@@ -193,12 +195,45 @@ All colors MUST be HSL.
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease-out;
+    z-index: 1;
   }
   
   .btn-cinematic:hover::before {
     left: 100%;
+  }
+  
+  .btn-cinematic:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s ease-in-out;
+  }
+  
+  /* Enhanced button effects for special buttons */
+  .btn-web-enhanced {
+    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--accent)) 100%);
+    box-shadow: 0 8px 32px hsl(var(--secondary) / 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-web-enhanced:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 20px 40px hsl(var(--secondary) / 0.4), 0 0 30px hsl(var(--accent) / 0.3);
+  }
+  
+  .btn-web-enhanced::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .btn-web-enhanced:hover::after {
+    opacity: 1;
   }
   
   /* Animated underline for links */

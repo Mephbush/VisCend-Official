@@ -30,19 +30,6 @@ const Layout = () => {
     }
   }, []);
 
-  // Only disable intro in actual builder/design environments, not preview
-  useEffect(() => {
-    if (typeof window !== 'undefined' && 
-        window.location.href.includes('builder') && 
-        !window.location.href.includes('lovableproject.com')) {
-      setShowIntro(false);
-      // In Builder design mode client-side scripts may not run — ensure animations are visible there
-      try {
-        document.documentElement.classList.add('sr-play');
-      } catch (e) {}
-    }
-  }, []);
-
   // Apply theme to document
   useEffect(() => {
     const root = document.documentElement;

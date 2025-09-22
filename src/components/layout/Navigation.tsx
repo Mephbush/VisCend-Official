@@ -15,6 +15,7 @@ interface NavigationProps {
 const Navigation = ({ language, onLanguageChange, theme, onThemeChange }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
 
   const navigationItems = {
@@ -41,6 +42,11 @@ const Navigation = ({ language, onLanguageChange, theme, onThemeChange }: Naviga
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      
+      // Calculate scroll progress
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(Math.min(progress, 100));
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -59,6 +65,10 @@ const Navigation = ({ language, onLanguageChange, theme, onThemeChange }: Naviga
           : "bg-transparent"
       )}
     >
+      {/* Scroll Progress Bar */}
+      <div className="absolute top-0 left-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent transition-all duration-200 ease-out" 
+           style={{ width: `${scrollProgress}%` }} />
+    
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}

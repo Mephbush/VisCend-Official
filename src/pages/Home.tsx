@@ -391,11 +391,13 @@ const Home = () => {
               </div>
 
               <Button 
-                className="w-full bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white border-none hover:scale-105 transition-transform duration-300"
+                className="w-full btn-cinematic text-white border-none group relative overflow-hidden"
                 asChild
               >
-                <Link to="/web">
-                  Explore Web Services
+                <Link to="/web" className="flex items-center justify-center gap-2">
+                  <span className="relative z-10">Explore Web Services</span>
+                  <ArrowRight className="h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-secondary/0 via-accent/20 to-secondary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </Link>
               </Button>
             </div>

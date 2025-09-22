@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ScrollReveal from "@/components/ui/scroll-reveal";
+import ScrollRevealGroup from "@/components/ui/scroll-reveal-group";
 import { 
   Eye, 
   ArrowRight,
@@ -279,146 +281,173 @@ const Web = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-24 hero-pattern">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 rounded-full glass border border-secondary/20 mb-8 animate-fade-in">
-              <Eye className="h-4 w-4 text-secondary mr-2" />
-              <span className="text-sm font-medium text-neon-secondary">
-                Digital Solutions
-              </span>
-            </div>
+      <ScrollReveal direction="up">
+        <section className="py-24 hero-pattern">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <ScrollReveal delay={0.1}>
+                <div className="inline-flex items-center px-4 py-2 rounded-full glass border border-secondary/20 mb-8">
+                  <Eye className="h-4 w-4 text-secondary mr-2" />
+                  <span className="text-sm font-medium text-neon-secondary">
+                    Digital Solutions
+                  </span>
+                </div>
+              </ScrollReveal>
 
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up">
-              <span className="text-gradient-secondary animate-gradient-shift bg-[length:200%_auto]">
-                {t.heroTitle}
-              </span>
-            </h1>
-            <p className="text-2xl md:text-3xl font-light text-neon-secondary mb-8 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-              {t.heroSubtitle}
-            </p>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-              {t.heroDescription}
-            </p>
+              <ScrollReveal delay={0.2}>
+                <h1 className="text-4xl md:text-6xl font-bold mb-6">
+                  <span className="text-gradient-secondary animate-gradient-shift bg-[length:200%_auto]">
+                    {t.heroTitle}
+                  </span>
+                </h1>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={0.3}>
+                <p className="text-2xl md:text-3xl font-light text-neon-secondary mb-8">
+                  {t.heroSubtitle}
+                </p>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={0.4}>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                  {t.heroDescription}
+                </p>
+              </ScrollReveal>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* Digital Readiness */}
-      <section className="py-24 bg-card/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gradient-secondary">
-              {t.digitalReadinessTitle}
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up">
-              {t.digitalReadinessDescription}
-            </p>
+      <ScrollReveal direction="up">
+        <section className="py-24 bg-card/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <ScrollReveal delay={0.1}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gradient-secondary">
+                  {t.digitalReadinessTitle}
+                </h2>
+              </ScrollReveal>
+              <ScrollReveal delay={0.2}>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  {t.digitalReadinessDescription}
+                </p>
+              </ScrollReveal>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* Our Expertise Highlights: Frontend / Backend / DB / Security */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-semibold text-gradient-primary">{language === 'ar' ? 'ماذا نتعامل معه' : 'What we handle'}</h3>
-              <p className="text-muted-foreground max-w-2xl mx-auto mt-3">
-                {language === 'ar'
-                  ? 'نغطي كافة طبقات الحلول: واجهة المستخدم، الخوادم، قواعد البيانات، والأمن. نبني أنظمة متكاملة قابلة للتوسع.'
-                  : 'We cover all layers: frontend, backend, databases and security. We build integrated, scalable systems.'}
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-6">
-              <div className="glass p-6 text-center">
-                <div className="text-2xl font-bold text-primary mb-3">Frontend</div>
-                <p className="text-sm text-muted-foreground">{language === 'ar' ? 'تصميم تفاعلي، أداء مُحسّن، وتجربة مستخدم متقدمة' : 'Interactive UI, optimized performance, advanced UX'}</p>
+      <ScrollReveal direction="up">
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <ScrollReveal delay={0.1}>
+                  <h3 className="text-3xl font-semibold text-gradient-primary">{language === 'ar' ? 'ماذا نتعامل معه' : 'What we handle'}</h3>
+                </ScrollReveal>
+                <ScrollReveal delay={0.2}>
+                  <p className="text-muted-foreground max-w-2xl mx-auto mt-3">
+                    {language === 'ar'
+                      ? 'نغطي كافة طبقات الحلول: واجهة المستخدم، الخوادم، قواعد البيانات، والأمن. نبني أنظمة متكاملة قابلة للتوسع.'
+                      : 'We cover all layers: frontend, backend, databases and security. We build integrated, scalable systems.'}
+                  </p>
+                </ScrollReveal>
               </div>
 
-              <div className="glass p-6 text-center">
-                <div className="text-2xl font-bold text-primary mb-3">Backend</div>
-                <p className="text-sm text-muted-foreground">{language === 'ar' ? 'خدمات API مرنة، هندسة سحابية، وعمليات متكاملة' : 'Flexible APIs, cloud architecture, and integrated operations'}</p>
-              </div>
+              <ScrollRevealGroup className="grid md:grid-cols-4 gap-6" stagger={0.1} direction="up">
+                <div className="glass p-6 text-center hover:scale-105 transition-transform duration-300">
+                  <div className="text-2xl font-bold text-primary mb-3">Frontend</div>
+                  <p className="text-sm text-muted-foreground">{language === 'ar' ? 'تصميم تفاعلي، أداء مُحسّن، وتجربة مستخدم متقدمة' : 'Interactive UI, optimized performance, advanced UX'}</p>
+                </div>
 
-              <div className="glass p-6 text-center">
-                <div className="text-2xl font-bold text-primary mb-3">Databases</div>
-                <p className="text-sm text-muted-foreground">{language === 'ar' ? 'تصميم قواعد بيانات، أداء واستعادة بيانات موثوقة' : 'Database design, performance and reliable data retrieval'}</p>
-              </div>
+                <div className="glass p-6 text-center hover:scale-105 transition-transform duration-300">
+                  <div className="text-2xl font-bold text-primary mb-3">Backend</div>
+                  <p className="text-sm text-muted-foreground">{language === 'ar' ? 'خدمات API مرنة، هندسة سحابية، وعمليات متكاملة' : 'Flexible APIs, cloud architecture, and integrated operations'}</p>
+                </div>
 
-              <div className="glass p-6 text-center">
-                <div className="text-2xl font-bold text-primary mb-3">Security</div>
-                <p className="text-sm text-muted-foreground">{language === 'ar' ? 'أفضل ممارسات الأمان، تشفير، وإدارة وصول' : 'Best security practices, encryption and access control'}</p>
-              </div>
+                <div className="glass p-6 text-center hover:scale-105 transition-transform duration-300">
+                  <div className="text-2xl font-bold text-primary mb-3">Databases</div>
+                  <p className="text-sm text-muted-foreground">{language === 'ar' ? 'تصميم قواعد بيانات، أداء واستعادة بيانات موثوقة' : 'Database design, performance and reliable data retrieval'}</p>
+                </div>
+
+                <div className="glass p-6 text-center hover:scale-105 transition-transform duration-300">
+                  <div className="text-2xl font-bold text-primary mb-3">Security</div>
+                  <p className="text-sm text-muted-foreground">{language === 'ar' ? 'أفضل ممارسات الأمان، تشفير، وإدارة وصول' : 'Best security practices, encryption and access control'}</p>
+                </div>
+              </ScrollRevealGroup>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* Services Grid */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient-secondary">
-              {t.servicesTitle}
-            </h2>
-          </div>
+      <ScrollReveal direction="up">
+        <section className="py-24">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <ScrollReveal delay={0.1}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient-secondary">
+                  {t.servicesTitle}
+                </h2>
+              </ScrollReveal>
+            </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {t.services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <Card 
-                  key={index} 
-                  className="glass border-border/20 hover:border-secondary/30 transition-all duration-300 group hover:scale-105 animate-scale-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <CardContent className="p-8">
-                    <div className="flex items-center space-x-4 mb-6">
-                      <div className="p-3 rounded-full bg-gradient-to-br from-secondary to-accent">
-                        <Icon className="h-6 w-6 text-white" />
+            <ScrollRevealGroup className="grid lg:grid-cols-2 gap-8" stagger={0.15} direction="up">
+              {t.services.map((service, index) => {
+                const Icon = service.icon;
+                return (
+                  <Card 
+                    key={index} 
+                    className="glass border-border/20 hover:border-secondary/30 transition-all duration-300 group hover:scale-105"
+                  >
+                    <CardContent className="p-8">
+                      <div className="flex items-center space-x-4 mb-6">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-secondary to-accent">
+                          <Icon className="h-6 w-6 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-neon-secondary group-hover:text-secondary transition-colors">
+                          {service.title}
+                        </h3>
                       </div>
-                      <h3 className="text-2xl font-bold text-neon-secondary group-hover:text-secondary transition-colors">
-                        {service.title}
-                      </h3>
-                    </div>
-                    
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
-                      {service.description}
-                    </p>
+                      
+                      <p className="text-muted-foreground mb-6 leading-relaxed">
+                        {service.description}
+                      </p>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <h4 className="font-semibold text-secondary mb-3">Key Features:</h4>
-                        <ul className="text-sm text-muted-foreground space-y-1">
-                          {service.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-center space-x-2">
-                              <div className="w-1 h-1 bg-secondary rounded-full" />
-                              <span>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                          <h4 className="font-semibold text-secondary mb-3">Key Features:</h4>
+                          <ul className="text-sm text-muted-foreground space-y-1">
+                            {service.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-center space-x-2">
+                                <div className="w-1 h-1 bg-secondary rounded-full" />
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
 
-                      <div>
-                        <h4 className="font-semibold text-accent mb-3">Technologies:</h4>
-                        <div className="flex flex-wrap gap-1 mb-4">
-                          {service.technologies.map((tech, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">
-                              {tech}
-                            </Badge>
-                          ))}
+                        <div>
+                          <h4 className="font-semibold text-accent mb-3">Technologies:</h4>
+                          <div className="flex flex-wrap gap-1 mb-4">
+                            {service.technologies.map((tech, idx) => (
+                              <Badge key={idx} variant="secondary" className="text-xs">
+                                {tech}
+                              </Badge>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </ScrollRevealGroup>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* Website Types */}
       <section className="py-24 bg-card/30">
@@ -459,66 +488,81 @@ const Web = () => {
       </section>
 
       {/* Process */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient-secondary">
-              {t.processTitle}
-            </h2>
-          </div>
+      <ScrollReveal direction="up">
+        <section className="py-24">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <ScrollReveal delay={0.1}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient-secondary">
+                  {t.processTitle}
+                </h2>
+              </ScrollReveal>
+            </div>
 
-          <div className="max-w-4xl mx-auto">
-            {t.process.map((step, index) => (
-              <div 
-                key={index} 
-                className="flex items-start space-x-6 mb-12 animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">{step.step}</span>
+            <div className="max-w-4xl mx-auto">
+              <ScrollRevealGroup stagger={0.15} direction="up">
+                {t.process.map((step, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-start space-x-6 mb-12"
+                  >
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">{step.step}</span>
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-neon-secondary mb-3">
+                        {step.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-neon-secondary mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+                ))}
+              </ScrollRevealGroup>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* CTA */}
-      <section className="py-24 hero-pattern">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up">
-              <span className="text-gradient-secondary animate-gradient-shift bg-[length:200%_auto]">
-                {t.ctaTitle}
-              </span>
-            </h2>
-            <p className="text-xl text-muted-foreground mb-12 leading-relaxed animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-              {t.ctaDescription}
-            </p>
-            
-            <Button 
-              size="lg"
-              className="bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white border-none px-8 py-6 text-lg animate-fade-in-up"
-              style={{ animationDelay: "0.4s" }}
-              asChild
-            >
-              <Link to="/contact">
-                {t.ctaButton}
-              </Link>
-            </Button>
+      <ScrollReveal direction="up">
+        <section className="py-24 hero-pattern">
+          <div className="container mx-auto px-4 text-center">
+            <div className="max-w-4xl mx-auto">
+              <ScrollReveal delay={0.1}>
+                <h2 className="text-4xl md:text-6xl font-bold mb-6">
+                  <span className="text-gradient-secondary animate-gradient-shift bg-[length:200%_auto]">
+                    {t.ctaTitle}
+                  </span>
+                </h2>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={0.2}>
+                <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
+                  {t.ctaDescription}
+                </p>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={0.3}>
+                <Button 
+                  size="lg"
+                  className="btn-web-enhanced text-white border-none px-8 py-6 text-lg group relative overflow-hidden"
+                  asChild
+                >
+                  <Link to="/contact" className="flex items-center gap-2">
+                    <span className="relative z-10">{t.ctaButton}</span>
+                    <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-accent/20 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </Link>
+                </Button>
+              </ScrollReveal>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
     </div>
   );
 };
