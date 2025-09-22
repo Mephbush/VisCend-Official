@@ -26,6 +26,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     company: "",
     service_type: "",
     message: ""
@@ -47,6 +48,8 @@ const Contact = () => {
       namePlaceholder: "Enter your full name",
       emailLabel: "Email Address",
       emailPlaceholder: "Enter your email address",
+      phoneLabel: "Phone Number",
+      phonePlaceholder: "Enter your phone number (optional)",
       companyLabel: "Company Name",
       companyPlaceholder: "Enter your company name (optional)",
       serviceLabel: "Service Type",
@@ -90,6 +93,8 @@ const Contact = () => {
       namePlaceholder: "أدخل اسمك الكامل",
       emailLabel: "عنوان البريد الإلكتروني", 
       emailPlaceholder: "أدخل عنوان بريدك الإلكتروني",
+      phoneLabel: "رقم الهاتف",
+      phonePlaceholder: "أدخل رقم هاتفك (اختياري)",
       companyLabel: "اسم الشركة",
       companyPlaceholder: "أدخل اسم شركتك (اختياري)",
       serviceLabel: "نوع الخدمة",
@@ -156,7 +161,7 @@ const Contact = () => {
         .insert([{
           name: formData.name,
           email: formData.email,
-          phone: null,
+          phone: formData.phone || null,
           company: formData.company || null,
           service_type: formData.service_type || 'other',
           message: formData.message,
@@ -177,6 +182,7 @@ const Contact = () => {
       setFormData({
         name: "",
         email: "",
+        phone: "",
         company: "",
         service_type: "",
         message: ""
@@ -282,6 +288,21 @@ const Contact = () => {
                       onChange={(e) => handleInputChange('email', e.target.value)}
                       className="glass border-border/20 focus:border-primary/50"
                       required
+                    />
+                  </div>
+
+                  {/* Phone */}
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-sm font-medium">
+                      {t.phoneLabel}
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder={t.phonePlaceholder}
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      className="glass border-border/20 focus:border-primary/50"
                     />
                   </div>
 
@@ -408,8 +429,10 @@ const Contact = () => {
                     </h3>
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    We typically respond to all inquiries within 24 hours during business days. 
-                    For urgent matters, feel free to call us directly.
+                    {language === 'ar' 
+                      ? 'نحن نرد عادة على جميع الاستفسارات في غضون 24 ساعة خلال أيام العمل. للأمور العاجلة، لا تتردد في إرسال بريد إلكتروني مفصل.'
+                      : 'We typically respond to all inquiries within 24 hours during business days. For urgent matters, feel free to send a detailed email.'
+                    }
                   </p>
                 </CardContent>
               </Card>
