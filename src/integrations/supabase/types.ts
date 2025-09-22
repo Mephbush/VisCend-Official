@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      blocked_email_domains: {
+        Row: {
+          created_at: string
+          domain: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          domain: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          domain?: string
+          id?: string
+        }
+        Relationships: []
+      }
       contact_inquiries: {
         Row: {
           company: string | null
@@ -101,9 +119,120 @@ export type Database = {
         }
         Relationships: []
       }
+      site_visits: {
+        Row: {
+          browser: string | null
+          browser_version: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          ended_at: string | null
+          id: string
+          ip_address: unknown | null
+          is_returning_visitor: boolean | null
+          language: string | null
+          operating_system: string | null
+          page_path: string
+          page_title: string | null
+          referrer: string | null
+          screen_resolution: string | null
+          session_id: string | null
+          timezone: string | null
+          user_agent: string | null
+          visit_duration: number | null
+        }
+        Insert: {
+          browser?: string | null
+          browser_version?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          ended_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          is_returning_visitor?: boolean | null
+          language?: string | null
+          operating_system?: string | null
+          page_path: string
+          page_title?: string | null
+          referrer?: string | null
+          screen_resolution?: string | null
+          session_id?: string | null
+          timezone?: string | null
+          user_agent?: string | null
+          visit_duration?: number | null
+        }
+        Update: {
+          browser?: string | null
+          browser_version?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          ended_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          is_returning_visitor?: boolean | null
+          language?: string | null
+          operating_system?: string | null
+          page_path?: string
+          page_title?: string | null
+          referrer?: string | null
+          screen_resolution?: string | null
+          session_id?: string | null
+          timezone?: string | null
+          user_agent?: string | null
+          visit_duration?: number | null
+        }
+        Relationships: []
+      }
+      visitors_site: {
+        Row: {
+          created_at: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
+      website_visits: {
+        Row: {
+          created_at: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      site_analytics: {
+        Row: {
+          avg_duration: number | null
+          new_visitors: number | null
+          page_path: string | null
+          returning_visitors: number | null
+          total_visits: number | null
+          unique_sessions: number | null
+          unique_visitors: number | null
+          visit_date: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
