@@ -9,133 +9,136 @@ interface IntroAnimationProps {
 const IntroAnimation = ({ onComplete, language = "en" }: IntroAnimationProps) => {
   const [stage, setStage] = useState(0);
 
-  // Hosted logo URL
+  // Logo URL
   const logoUrl = "https://cdn.builder.io/api/v1/image/assets%2F522d531155314df58f36d2874dd36af0%2F61d0cf36a2c94c91bd5ed392f155fa37?format=webp&width=800";
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStage(1), 400),   // Logo scale in
-      setTimeout(() => setStage(2), 1000),  // Logo glow effect
-      setTimeout(() => setStage(3), 1600),  // Company name appear
-      setTimeout(() => setStage(4), 2400),  // Tagline appear
-      setTimeout(() => setStage(5), 3200),  // Description appear
-      setTimeout(() => setStage(6), 4200),  // Fade out start
-      setTimeout(() => onComplete(), 4800), // Complete
+      setTimeout(() => setStage(1), 300),   // Background particles
+      setTimeout(() => setStage(2), 800),   // Logo entrance
+      setTimeout(() => setStage(3), 1400),  // Text reveal
+      setTimeout(() => setStage(4), 2200),  // Final effect
+      setTimeout(() => setStage(5), 3000),  // Exit animation
+      setTimeout(() => onComplete(), 3600), // Complete
     ];
 
     return () => timers.forEach(clearTimeout);
   }, [onComplete]);
 
   const brandName = language === 'ar' ? 'فِسند' : 'VisCend';
-  const companyName = language === 'ar' ? `شركة ${brandName} للتقنية` : `${brandName} Technologies`;
-  const tagline = language === 'ar' ? 'شريكك في النجاح الرقمي' : 'Your Digital Success Partner';
-  const description = language === 'ar' 
-    ? 'نساعدك لتحقيق أهدافك في العالم الرقمي من خلال حلول مبتكرة وتصميمات بصرية مبهرة'
-    : 'We help you achieve your goals in the digital world through innovative solutions and striking visual design.';
+  const tagline = language === 'ar' ? 'نصمم المستقبل الرقمي' : 'Designing Digital Future';
 
   return (
     <div className={cn(
       "fixed inset-0 z-[100] flex items-center justify-center overflow-hidden",
-      "bg-gradient-to-br from-background via-background to-background/98",
-      "transition-all duration-700 ease-out",
-      stage === 6 && "opacity-0 pointer-events-none"
+      "bg-black",
+      "transition-all duration-1000 ease-in-out",
+      stage === 5 && "opacity-0 pointer-events-none"
     )}>
-      {/* Animated Background Effects */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Animated particles background */}
+      <div className="absolute inset-0">
+        {/* Floating particles */}
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className={cn(
+              "absolute w-1 h-1 bg-primary/40 rounded-full",
+              "transition-all duration-2000 ease-out",
+              stage >= 1 ? "opacity-100" : "opacity-0"
+            )}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${i * 100}ms`,
+              animation: stage >= 1 ? 'float 3s infinite ease-in-out' : 'none',
+            }}
+          />
+        ))}
+        
+        {/* Central glow effect */}
         <div className={cn(
-          "absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-20",
-          "bg-gradient-radial from-primary/30 to-transparent",
+          "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+          "w-96 h-96 rounded-full blur-3xl",
+          "bg-gradient-radial from-primary/20 via-secondary/10 to-transparent",
           "transition-all duration-2000 ease-out",
-          stage >= 2 ? "scale-150 opacity-10" : "scale-0 opacity-0"
-        )} />
-        <div className={cn(
-          "absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full opacity-15",
-          "bg-gradient-radial from-secondary/30 to-transparent",
-          "transition-all duration-2000 ease-out delay-300",
-          stage >= 2 ? "scale-150 opacity-8" : "scale-0 opacity-0"
+          stage >= 1 ? "scale-100 opacity-100" : "scale-0 opacity-0"
         )} />
       </div>
 
-      <div className="relative z-10 text-center space-y-8 max-w-2xl px-8">
-        {/* Logo with Professional Animation */}
+      {/* Main content */}
+      <div className="relative z-10 text-center">
+        {/* Logo with dramatic entrance */}
         <div className={cn(
-          "relative flex items-center justify-center",
-          "transition-all duration-1200 ease-out transform",
-          stage >= 1 ? "opacity-100 scale-100" : "opacity-0 scale-90"
+          "mb-8 transition-all duration-1200 ease-out transform",
+          stage >= 2 ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-50 rotate-12"
         )}>
           <div className={cn(
-            "relative p-4 rounded-2xl",
-            "transition-all duration-1000 ease-out",
-            stage >= 2 && "shadow-[0_0_80px_hsl(var(--primary)/0.6)]"
+            "relative inline-block p-6 rounded-full",
+            "before:absolute before:inset-0 before:rounded-full before:border-2 before:border-primary/50",
+            "before:transition-all before:duration-1000",
+            stage >= 2 && "before:animate-spin before:border-primary"
           )}>
             <img 
               src={logoUrl} 
               alt={brandName}
               className={cn(
-                "h-20 w-auto transition-all duration-1000 ease-out",
-                stage >= 2 && "drop-shadow-[0_0_30px_hsl(var(--primary)/0.8)]"
+                "h-24 w-auto relative z-10 transition-all duration-1000",
+                stage >= 3 && "drop-shadow-[0_0_40px_hsl(var(--primary)/0.8)]"
               )}
             />
           </div>
         </div>
 
-        {/* Brand Name with Gradient Effect */}
+        {/* Brand name with typewriter effect */}
         <div className={cn(
-          "transition-all duration-1000 ease-out transform",
+          "transition-all duration-800 ease-out transform",
           stage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
           <h1 className={cn(
-            "text-4xl md:text-5xl font-bold mb-2",
-            "bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent",
-            "transition-all duration-800 ease-out"
+            "text-5xl md:text-6xl font-bold mb-4 text-white",
+            "bg-gradient-to-r from-primary via-white to-secondary bg-clip-text text-transparent",
+            "animate-pulse",
+            language === 'ar' ? "font-arabic" : ""
           )}>
-            {companyName}
+            {brandName}
           </h1>
         </div>
 
-        {/* Tagline */}
+        {/* Tagline with slide effect */}
         <div className={cn(
-          "transition-all duration-1000 ease-out transform delay-200",
-          stage >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          "transition-all duration-1000 ease-out transform delay-300",
+          stage >= 3 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
         )}>
-          <p className="text-xl md:text-2xl font-medium text-foreground/90">
+          <p className={cn(
+            "text-xl md:text-2xl font-light text-gray-300 mb-8",
+            language === 'ar' ? "font-arabic" : ""
+          )}>
             {tagline}
           </p>
         </div>
 
-        {/* Description */}
+        {/* Loading bar */}
         <div className={cn(
-          "transition-all duration-1000 ease-out transform delay-400",
-          stage >= 5 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          "mx-auto w-48 h-1 bg-gray-800 rounded-full overflow-hidden",
+          "transition-all duration-500 ease-out",
+          stage >= 3 ? "opacity-100" : "opacity-0"
         )}>
-          <p className={cn(
-            "text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed",
-            language === 'ar' ? "text-right" : "text-center"
-          )}>
-            {description}
-          </p>
+          <div className={cn(
+            "h-full bg-gradient-to-r from-primary to-secondary rounded-full",
+            "transition-all duration-2000 ease-out",
+            stage >= 4 ? "w-full" : "w-0"
+          )} />
         </div>
 
-        {/* Progress indicator */}
+        {/* Completion pulse effect */}
         <div className={cn(
-          "flex justify-center mt-8",
-          "transition-all duration-500 ease-out",
-          stage >= 5 ? "opacity-100" : "opacity-0"
-        )}>
-          <div className="flex space-x-2">
-            {[0, 1, 2].map((dot) => (
-              <div
-                key={dot}
-                className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-300",
-                  stage >= 5 ? "bg-primary animate-pulse" : "bg-muted"
-                )}
-                style={{ animationDelay: `${dot * 200}ms` }}
-              />
-            ))}
-          </div>
-        </div>
+          "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+          "w-full h-full rounded-full border border-primary/30",
+          "transition-all duration-1000 ease-out",
+          stage >= 4 ? "scale-150 opacity-0" : "scale-0 opacity-0"
+        )} />
       </div>
+
     </div>
   );
 };
