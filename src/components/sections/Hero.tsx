@@ -248,11 +248,15 @@ const Hero = ({ language }: HeroProps) => {
                 transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
               >
                 <div className="text-3xl md:text-4xl mb-2 relative z-[50]">
-                  <AnimatedCounter 
-                    target={parseInt(stat.number.replace('+', ''))} 
-                    suffix="+" 
-                    className="text-primary font-bold"
-                  />
+                  {stat.number === "24/7" ? (
+                    <span className="text-primary font-bold">{stat.number}</span>
+                  ) : (
+                    <AnimatedCounter 
+                      target={parseInt(stat.number.replace('+', ''))} 
+                      suffix="+" 
+                      className="text-primary font-bold"
+                    />
+                  )}
                 </div>
                 <div className="text-sm text-muted-foreground relative z-[50]">
                   {stat.label}

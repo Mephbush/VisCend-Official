@@ -338,7 +338,7 @@ const Home = () => {
               </div>
 
               <Button 
-                className="w-full bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white border-none"
+                className="w-full bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white border-none hover:scale-105 transition-transform duration-300"
                 asChild
               >
                 <Link to="/web">
