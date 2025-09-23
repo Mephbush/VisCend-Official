@@ -59,15 +59,54 @@ const getDeviceInfo = () => {
   return { device_type, browser, os };
 };
 
-// Get IP address (using a public service)
+// Get IP address (using multiple services for better reliability)
 const getIPAddress = async (): Promise<string> => {
+  const services = [
+    'https://api.ipify.org?format=json',
+    'https://ipapi.co/ip/',
+    'https://ipinfo.io/ip'
+  ];
+
+  for (const service of services) {
+    try {
+      const response = await fetch(service);
+      if (service.includes('ipify')) {
+        const data = await response.json();
+        return data.ip;
+      } else {
+        const ip = await response.text();
+        return ip.trim();
+      }
+    } catch (error) {
+      console.log(`Failed to get IP from ${service}`);
+    }
+  }
+  
+  // Fallback: try to get IP from WebRTC
   try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
+    return new Promise((resolve) => {
+      const pc = new RTCPeerConnection({ iceServers: [] });
+      pc.createDataChannel('');
+      pc.onicecandidate = (ice) => {
+        if (ice.candidate) {
+          const candidate = ice.candidate.candidate;
+          const ipMatch = candidate.match(/(\d+\.\d+\.\d+\.\d+)/);
+          if (ipMatch) {
+            pc.close();
+            resolve(ipMatch[1]);
+          }
+        }
+      };
+      pc.createOffer().then(offer => pc.setLocalDescription(offer));
+      
+      // Timeout after 3 seconds
+      setTimeout(() => {
+        pc.close();
+        resolve('غير محدد');
+      }, 3000);
+    });
   } catch (error) {
-    console.log('Could not get IP address');
-    return 'Unknown';
+    return 'غير محدد';
   }
 };
 
@@ -88,10 +127,25 @@ const getLocationInfo = async (ip: string) => {
   }
 };
 
+// Format visit duration in Arabic
+const formatDuration = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  
+  let result = '';
+  if (hours > 0) result += `${hours} ساعة `;
+  if (minutes > 0) result += `${minutes} دقيقة `;
+  if (secs > 0 || result === '') result += `${secs} ثانية`;
+  
+  return result.trim();
+};
+
 export const useVisitorTracking = () => {
   useEffect(() => {
     let startTime = Date.now();
     let isTracked = false;
+    let lastPath = window.location.pathname;
 
     const trackVisitor = async () => {
       if (isTracked) return;
@@ -151,13 +205,54 @@ export const useVisitorTracking = () => {
       }
     };
 
+    // Track page navigation
+    const trackPageNavigation = async (newPath: string) => {
+      if (newPath !== lastPath) {
+        console.log(`تنقل من ${lastPath} إلى ${newPath}`);
+        
+        // Track new page visit
+        try {
+          const sessionId = getSessionId();
+          const deviceInfo = getDeviceInfo();
+          const ip_address = await getIPAddress();
+          const locationInfo = await getLocationInfo(ip_address);
+
+          const visitorData = {
+            session_id: sessionId,
+            ip_address,
+            user_agent: navigator.userAgent,
+            screen_resolution: `${screen.width}x${screen.height}`,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            language: navigator.language,
+            referrer: lastPath,
+            page_path: newPath,
+            page_title: document.title,
+            country: locationInfo.country,
+            city: locationInfo.city,
+            device_type: deviceInfo.device_type,
+            browser: deviceInfo.browser,
+            operating_system: deviceInfo.os,
+            is_returning_visitor: localStorage.getItem('has_visited') === 'true'
+          };
+
+          await supabase.from('site_visits').insert([visitorData]);
+          console.log(`تم تسجيل زيارة جديدة للصفحة: ${newPath} - IP: ${ip_address}`);
+        } catch (error) {
+          console.log('خطأ في تتبع تنقل الصفحة:', error);
+        }
+        
+        lastPath = newPath;
+      }
+    };
+
     // Track page duration on beforeunload
     const handleBeforeUnload = async () => {
-      const visit_duration = Math.round((Date.now() - startTime) / 1000); // in seconds
+      const visit_duration = Math.round((Date.now() - startTime) / 1000);
+      const durationFormatted = formatDuration(visit_duration);
       
       try {
         const sessionId = getSessionId();
-        console.log('Visit duration:', visit_duration, 'seconds for session:', sessionId);
+        console.log(`مدة الزيارة: ${durationFormatted} للجلسة: ${sessionId}`);
         
         // Update database with visit duration
         try {
@@ -176,16 +271,40 @@ export const useVisitorTracking = () => {
       }
     };
 
+    // Monitor URL changes for page navigation tracking
+    const handleUrlChange = () => {
+      trackPageNavigation(window.location.pathname);
+    };
+
     // Track immediately
     trackVisitor();
 
     // Track duration on page leave
     window.addEventListener('beforeunload', handleBeforeUnload);
     window.addEventListener('pagehide', handleBeforeUnload);
+    
+    // Track navigation changes (for SPA routing)
+    window.addEventListener('popstate', handleUrlChange);
+    
+    // Intercept link clicks to track page navigation
+    const handleLinkClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      if (link && link.href && !link.href.startsWith('http') && !link.href.includes('#')) {
+        const url = new URL(link.href, window.location.origin);
+        if (url.origin === window.location.origin) {
+          setTimeout(() => trackPageNavigation(url.pathname), 100);
+        }
+      }
+    };
+    
+    document.addEventListener('click', handleLinkClick);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       window.removeEventListener('pagehide', handleBeforeUnload);
+      window.removeEventListener('popstate', handleUrlChange);
+      document.removeEventListener('click', handleLinkClick);
       handleBeforeUnload(); // Track duration on component unmount
     };
   }, []);
