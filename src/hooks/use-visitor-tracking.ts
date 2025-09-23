@@ -1,229 +1,343 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
-// Function to get comprehensive client info
-const getClientInfo = () => {
-  const ua = navigator.userAgent;
-  
-  // Detect device type
-  const deviceType = /Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) 
-    ? 'mobile' 
-    : /Tablet|iPad/i.test(ua) 
-    ? 'tablet' 
-    : 'desktop';
+interface VisitorData {
+  ip_address?: string;
+  user_agent?: string;
+  screen_resolution?: string;
+  timezone?: string;
+  language?: string;
+  referrer?: string;
+  page_path?: string;
+  session_id?: string;
+  country?: string;
+  city?: string;
+  device_type?: string;
+  browser?: string;
+  browser_version?: string;
+  os?: string;
+  visit_duration?: number;
+}
 
-  // Detect browser with version
-  let browser = 'Unknown';
-  let browserVersion = 'Unknown';
-  if (ua.includes('Chrome') && !ua.includes('Edg')) {
-    browser = 'Chrome';
-    const match = ua.match(/Chrome\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Firefox')) {
-    browser = 'Firefox';
-    const match = ua.match(/Firefox\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
-    browser = 'Safari';
-    const match = ua.match(/Version\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Edg')) {
-    browser = 'Edge';
-    const match = ua.match(/Edg\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Opera')) {
-    browser = 'Opera';
-    const match = ua.match(/Opera\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
+// Generate session ID
+const getSessionId = () => {
+  let sessionId = sessionStorage.getItem('visitor_session_id');
+  if (!sessionId) {
+    sessionId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    sessionStorage.setItem('visitor_session_id', sessionId);
   }
-
-  // Detect OS with version
-  let os = 'Unknown';
-  let osVersion = 'Unknown';
-  if (ua.includes('Windows NT')) {
-    os = 'Windows';
-    const match = ua.match(/Windows NT (\d+\.\d+)/);
-    osVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Mac OS X')) {
-    os = 'macOS';
-    const match = ua.match(/Mac OS X (\d+[._]\d+)/);
-    osVersion = match ? match[1].replace('_', '.') : 'Unknown';
-  } else if (ua.includes('Linux')) {
-    os = 'Linux';
-  } else if (ua.includes('Android')) {
-    os = 'Android';
-    const match = ua.match(/Android (\d+\.\d+)/);
-    osVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('iPhone OS') || ua.includes('iOS')) {
-    os = 'iOS';
-    const match = ua.match(/OS (\d+_\d+)/);
-    osVersion = match ? match[1].replace('_', '.') : 'Unknown';
-  }
-
-  // Get additional device info
-  const screenWidth = screen.width;
-  const screenHeight = screen.height;
-  const screenColorDepth = screen.colorDepth;
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const language = navigator.language;
-  const languages = navigator.languages?.join(',') || language;
-  const platform = navigator.platform;
-  const cookieEnabled = navigator.cookieEnabled;
-  const onlineStatus = navigator.onLine;
-  const doNotTrack = navigator.doNotTrack || 'unspecified';
-  
-  // Get connection info if available
-  const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
-  const connectionType = connection?.effectiveType || 'unknown';
-  const connectionSpeed = connection?.downlink || null;
-  
-  // Get viewport info
-  const viewportWidth = window.innerWidth;
-  const viewportHeight = window.innerHeight;
-  
-  // Get memory info if available
-  const memory = (performance as any).memory;
-  const memoryInfo = memory ? {
-    used: Math.round(memory.usedJSHeapSize / 1048576), // MB
-    total: Math.round(memory.totalJSHeapSize / 1048576), // MB
-    limit: Math.round(memory.jsHeapSizeLimit / 1048576) // MB
-  } : null;
-
-  return { 
-    deviceType, 
-    browser, 
-    browserVersion,
-    os, 
-    osVersion,
-    screenWidth,
-    screenHeight,
-    screenColorDepth,
-    viewportWidth,
-    viewportHeight,
-    timezone,
-    language,
-    languages,
-    platform,
-    cookieEnabled,
-    onlineStatus,
-    doNotTrack,
-    connectionType,
-    connectionSpeed,
-    memoryInfo
-  };
+  return sessionId;
 };
 
-// Function to get visitor IP and location info
-const getVisitorInfo = async (): Promise<any> => {
-  const ipServices = [
+// Get comprehensive device info with better accuracy
+const getDeviceInfo = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  let device_type = 'Desktop';
+  let browser = 'Unknown';
+  let browser_version = 'Unknown';
+  let os = 'Unknown';
+
+  // More accurate device detection
+  if (/ipad|tablet/i.test(ua) || (navigator.maxTouchPoints > 1 && /macintosh/i.test(ua))) {
+    device_type = 'Tablet';
+  } else if (/mobile|android|iphone|ipod|phone|blackberry|opera mini|iemobile|wpdesktop/i.test(ua)) {
+    device_type = 'Mobile';
+  } else if (navigator.maxTouchPoints > 0) {
+    device_type = 'Touch Device';
+  }
+
+  // Enhanced browser detection with versions
+  if (ua.includes('edg/')) {
+    browser = 'Microsoft Edge';
+    browser_version = ua.match(/edg\/(\d+\.\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('chrome/') && !ua.includes('chromium')) {
+    browser = 'Google Chrome';
+    browser_version = ua.match(/chrome\/(\d+\.\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('firefox/')) {
+    browser = 'Mozilla Firefox';
+    browser_version = ua.match(/firefox\/(\d+\.\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('safari/') && !ua.includes('chrome')) {
+    browser = 'Safari';
+    browser_version = ua.match(/version\/(\d+\.\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('opera/') || ua.includes('opr/')) {
+    browser = 'Opera';
+    browser_version = ua.match(/(opera|opr)\/(\d+\.\d+)/)?.[2] || 'Unknown';
+  } else if (ua.includes('samsung')) {
+    browser = 'Samsung Internet';
+  }
+
+  // More detailed OS detection
+  if (ua.includes('windows nt 10')) os = 'Windows 10/11';
+  else if (ua.includes('windows nt 6.3')) os = 'Windows 8.1';
+  else if (ua.includes('windows nt 6.2')) os = 'Windows 8';
+  else if (ua.includes('windows nt 6.1')) os = 'Windows 7';
+  else if (ua.includes('windows')) os = 'Windows';
+  else if (ua.includes('android')) {
+    const androidVersion = ua.match(/android (\d+\.\d+)/)?.[1];
+    os = androidVersion ? `Android ${androidVersion}` : 'Android';
+  }
+  else if (ua.includes('iphone os')) {
+    const iosVersion = ua.match(/iphone os (\d+_\d+)/)?.[1]?.replace('_', '.');
+    os = iosVersion ? `iOS ${iosVersion}` : 'iOS';
+  }
+  else if (ua.includes('mac os x')) {
+    const macVersion = ua.match(/mac os x (\d+_\d+)/)?.[1]?.replace('_', '.');
+    os = macVersion ? `macOS ${macVersion}` : 'macOS';
+  }
+  else if (ua.includes('linux')) os = 'Linux';
+  else if (ua.includes('ubuntu')) os = 'Ubuntu';
+
+  return { device_type, browser, browser_version, os };
+};
+
+// Get IP address (using multiple services for better reliability)
+const getIPAddress = async (): Promise<string> => {
+  const services = [
     'https://api.ipify.org?format=json',
-    'https://ipapi.co/json/',
-    'https://ipinfo.io/json',
-    'https://api.my-ip.io/ip.json',
-    'https://api64.ipify.org?format=json'
+    'https://ipapi.co/ip/',
+    'https://ipinfo.io/ip'
   ];
 
-  for (const service of ipServices) {
+  for (const service of services) {
     try {
       const response = await fetch(service);
-      const data = await response.json();
-      
-      // Different services return different structures
-      let result = {
-        ip: data.ip || data.query || 'unknown',
-        country: data.country || data.country_name || data.country_code || null,
-        region: data.region || data.regionName || null,
-        city: data.city || null,
-        timezone: data.timezone || null,
-        isp: data.isp || data.org || null,
-        latitude: data.lat || data.latitude || null,
-        longitude: data.lon || data.longitude || null,
-        postal: data.postal || data.zip || null
-      };
-
-      if (result.ip !== 'unknown') {
-        return result;
+      if (service.includes('ipify')) {
+        const data = await response.json();
+        return data.ip;
+      } else {
+        const ip = await response.text();
+        return ip.trim();
       }
     } catch (error) {
-      console.log(`Failed to get info from ${service}:`, error);
-      continue;
+      console.log(`Failed to get IP from ${service}`);
     }
   }
-
-  return {
-    ip: 'unknown',
-    country: null,
-    region: null,
-    city: null,
-    timezone: null,
-    isp: null,
-    latitude: null,
-    longitude: null,
-    postal: null
-  };
+  
+  // Fallback: try to get IP from WebRTC
+  try {
+    return new Promise((resolve) => {
+      const pc = new RTCPeerConnection({ iceServers: [] });
+      pc.createDataChannel('');
+      pc.onicecandidate = (ice) => {
+        if (ice.candidate) {
+          const candidate = ice.candidate.candidate;
+          const ipMatch = candidate.match(/(\d+\.\d+\.\d+\.\d+)/);
+          if (ipMatch) {
+            pc.close();
+            resolve(ipMatch[1]);
+          }
+        }
+      };
+      pc.createOffer().then(offer => pc.setLocalDescription(offer));
+      
+      // Timeout after 3 seconds
+      setTimeout(() => {
+        pc.close();
+        resolve('غير محدد');
+      }, 3000);
+    });
+  } catch (error) {
+    return 'غير محدد';
+  }
 };
 
-export const useVisitTracker = () => {
-  const location = useLocation();
+// Get geolocation info
+const getLocationInfo = async (ip: string) => {
+  try {
+    const response = await fetch(`https://ipapi.co/${ip}/json/`);
+    const data = await response.json();
+    return {
+      country: data.country_name || 'Unknown',
+      city: data.city || 'Unknown'
+    };
+  } catch (error) {
+    return {
+      country: 'Unknown',
+      city: 'Unknown'
+    };
+  }
+};
 
+// Format visit duration in Arabic
+const formatDuration = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  
+  let result = '';
+  if (hours > 0) result += `${hours} ساعة `;
+  if (minutes > 0) result += `${minutes} دقيقة `;
+  if (secs > 0 || result === '') result += `${secs} ثانية`;
+  
+  return result.trim();
+};
+
+export const useVisitorTracking = () => {
   useEffect(() => {
-    const trackVisit = async () => {
+    let startTime = Date.now();
+    let isTracked = false;
+    let lastPath = window.location.pathname;
+
+    const trackVisitor = async () => {
+      if (isTracked) return;
+      isTracked = true;
+
       try {
-        const clientInfo = getClientInfo();
-        const visitorInfo = await getVisitorInfo();
-        
-        const visitData = {
-          visitor_ip: visitorInfo.ip,
-          user_agent: navigator.userAgent.substring(0, 255), // Limit length
-          referrer: document.referrer || null,
-          page_path: location.pathname,
-          device_type: clientInfo.deviceType,
-          browser: clientInfo.browser,
-          browser_version: clientInfo.browserVersion,
-          os: clientInfo.os,
-          os_version: clientInfo.osVersion,
-          screen_width: clientInfo.screenWidth,
-          screen_height: clientInfo.screenHeight,
-          screen_color_depth: clientInfo.screenColorDepth,
-          viewport_width: clientInfo.viewportWidth,
-          viewport_height: clientInfo.viewportHeight,
-          timezone: clientInfo.timezone,
-          language: clientInfo.language,
-          languages: clientInfo.languages,
-          platform: clientInfo.platform,
-          cookie_enabled: clientInfo.cookieEnabled,
-          online_status: clientInfo.onlineStatus,
-          do_not_track: clientInfo.doNotTrack,
-          connection_type: clientInfo.connectionType,
-          connection_speed: clientInfo.connectionSpeed,
-          memory_used: clientInfo.memoryInfo?.used || null,
-          memory_total: clientInfo.memoryInfo?.total || null,
-          memory_limit: clientInfo.memoryInfo?.limit || null,
-          country: visitorInfo.country,
-          region: visitorInfo.region,
-          city: visitorInfo.city,
-          isp: visitorInfo.isp,
-          latitude: visitorInfo.latitude,
-          longitude: visitorInfo.longitude,
-          postal: visitorInfo.postal
+        const sessionId = getSessionId();
+        const deviceInfo = getDeviceInfo();
+        const ip_address = await getIPAddress();
+        const locationInfo = await getLocationInfo(ip_address);
+
+        const visitorData: VisitorData = {
+          session_id: sessionId,
+          ip_address,
+          user_agent: navigator.userAgent,
+          screen_resolution: `${screen.width}x${screen.height}`,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          language: navigator.language,
+          referrer: document.referrer || 'Direct',
+          page_path: window.location.pathname,
+          country: locationInfo.country,
+          city: locationInfo.city,
+          ...deviceInfo
         };
 
-        const { error } = await supabase
-          .from('website_visits')
-          .insert([visitData]);
+        // Store visitor data in Supabase
+        console.log('Visitor data collected:', visitorData);
+        
+        try {
+          const { error } = await supabase.from('site_visits').insert([{
+            session_id: visitorData.session_id,
+            ip_address: visitorData.ip_address,
+            user_agent: visitorData.user_agent,
+            screen_resolution: visitorData.screen_resolution,
+            timezone: visitorData.timezone,
+            language: visitorData.language,
+            referrer: visitorData.referrer,
+            page_path: visitorData.page_path,
+            page_title: document.title,
+            country: visitorData.country,
+            city: visitorData.city,
+            device_type: visitorData.device_type,
+            browser: visitorData.browser,
+            browser_version: visitorData.browser_version,
+            operating_system: visitorData.os,
+            is_returning_visitor: localStorage.getItem('has_visited') === 'true'
+          }]);
 
-        if (error) {
-          console.error('Failed to track visit:', error);
+          if (!error) {
+            localStorage.setItem('has_visited', 'true');
+          }
+        } catch (error) {
+          console.log('Error storing visitor data:', error);
         }
+
       } catch (error) {
-        console.error('Error tracking visit:', error);
+        console.log('Visitor tracking error:', error);
       }
     };
 
-    // Track visit after a small delay to avoid affecting page load
-    const timeoutId = setTimeout(trackVisit, 1000);
+    // Track page navigation
+    const trackPageNavigation = async (newPath: string) => {
+      if (newPath !== lastPath) {
+        console.log(`تنقل من ${lastPath} إلى ${newPath}`);
+        
+        // Track new page visit
+        try {
+          const sessionId = getSessionId();
+          const deviceInfo = getDeviceInfo();
+          const ip_address = await getIPAddress();
+          const locationInfo = await getLocationInfo(ip_address);
 
-    return () => clearTimeout(timeoutId);
-  }, [location.pathname]);
+          const visitorData = {
+            session_id: sessionId,
+            ip_address,
+            user_agent: navigator.userAgent,
+            screen_resolution: `${screen.width}x${screen.height}`,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            language: navigator.language,
+            referrer: lastPath,
+            page_path: newPath,
+            page_title: document.title,
+            country: locationInfo.country,
+            city: locationInfo.city,
+            device_type: deviceInfo.device_type,
+            browser: deviceInfo.browser,
+            operating_system: deviceInfo.os,
+            is_returning_visitor: localStorage.getItem('has_visited') === 'true'
+          };
+
+          await supabase.from('site_visits').insert([visitorData]);
+          console.log(`تم تسجيل زيارة جديدة للصفحة: ${newPath} - IP: ${ip_address}`);
+        } catch (error) {
+          console.log('خطأ في تتبع تنقل الصفحة:', error);
+        }
+        
+        lastPath = newPath;
+      }
+    };
+
+    // Track page duration on beforeunload
+    const handleBeforeUnload = async () => {
+      const visit_duration = Math.round((Date.now() - startTime) / 1000);
+      const durationFormatted = formatDuration(visit_duration);
+      
+      try {
+        const sessionId = getSessionId();
+        console.log(`مدة الزيارة: ${durationFormatted} للجلسة: ${sessionId}`);
+        
+        // Update database with visit duration
+        try {
+          await supabase.from('site_visits')
+            .update({ 
+              visit_duration,
+              ended_at: new Date().toISOString()
+            })
+            .eq('session_id', sessionId)
+            .eq('page_path', window.location.pathname);
+        } catch (error) {
+          console.log('Error updating visit duration:', error);
+        }
+      } catch (error) {
+        console.log('Duration tracking error:', error);
+      }
+    };
+
+    // Monitor URL changes for page navigation tracking
+    const handleUrlChange = () => {
+      trackPageNavigation(window.location.pathname);
+    };
+
+    // Track immediately
+    trackVisitor();
+
+    // Track duration on page leave
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('pagehide', handleBeforeUnload);
+    
+    // Track navigation changes (for SPA routing)
+    window.addEventListener('popstate', handleUrlChange);
+    
+    // Intercept link clicks to track page navigation
+    const handleLinkClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      if (link && link.href && !link.href.startsWith('http') && !link.href.includes('#')) {
+        const url = new URL(link.href, window.location.origin);
+        if (url.origin === window.location.origin) {
+          setTimeout(() => trackPageNavigation(url.pathname), 100);
+        }
+      }
+    };
+    
+    document.addEventListener('click', handleLinkClick);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('pagehide', handleBeforeUnload);
+      window.removeEventListener('popstate', handleUrlChange);
+      document.removeEventListener('click', handleLinkClick);
+      handleBeforeUnload(); // Track duration on component unmount
+    };
+  }, []);
 };
