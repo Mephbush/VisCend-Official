@@ -14,6 +14,7 @@ interface VisitorData {
   city?: string;
   device_type?: string;
   browser?: string;
+  browser_version?: string;
   os?: string;
   visit_duration?: number;
 }
@@ -28,35 +29,65 @@ const getSessionId = () => {
   return sessionId;
 };
 
-// Get device info
+// Get comprehensive device info with better accuracy
 const getDeviceInfo = () => {
-  const ua = navigator.userAgent;
+  const ua = navigator.userAgent.toLowerCase();
   let device_type = 'Desktop';
   let browser = 'Unknown';
+  let browser_version = 'Unknown';
   let os = 'Unknown';
 
-  // Detect device type
-  if (/tablet|ipad|playbook|silk/i.test(ua)) {
+  // More accurate device detection
+  if (/ipad|tablet/i.test(ua) || (navigator.maxTouchPoints > 1 && /macintosh/i.test(ua))) {
     device_type = 'Tablet';
-  } else if (/mobile|iphone|ipod|android|blackberry|opera|mini|windows\sce|palm|smartphone|iemobile/i.test(ua)) {
+  } else if (/mobile|android|iphone|ipod|phone|blackberry|opera mini|iemobile|wpdesktop/i.test(ua)) {
     device_type = 'Mobile';
+  } else if (navigator.maxTouchPoints > 0) {
+    device_type = 'Touch Device';
   }
 
-  // Detect browser
-  if (ua.includes('Chrome')) browser = 'Chrome';
-  else if (ua.includes('Firefox')) browser = 'Firefox';
-  else if (ua.includes('Safari')) browser = 'Safari';
-  else if (ua.includes('Edge')) browser = 'Edge';
-  else if (ua.includes('Opera')) browser = 'Opera';
+  // Enhanced browser detection with versions
+  if (ua.includes('edg/')) {
+    browser = 'Microsoft Edge';
+    browser_version = ua.match(/edg\/(\d+\.\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('chrome/') && !ua.includes('chromium')) {
+    browser = 'Google Chrome';
+    browser_version = ua.match(/chrome\/(\d+\.\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('firefox/')) {
+    browser = 'Mozilla Firefox';
+    browser_version = ua.match(/firefox\/(\d+\.\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('safari/') && !ua.includes('chrome')) {
+    browser = 'Safari';
+    browser_version = ua.match(/version\/(\d+\.\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('opera/') || ua.includes('opr/')) {
+    browser = 'Opera';
+    browser_version = ua.match(/(opera|opr)\/(\d+\.\d+)/)?.[2] || 'Unknown';
+  } else if (ua.includes('samsung')) {
+    browser = 'Samsung Internet';
+  }
 
-  // Detect OS
-  if (ua.includes('Windows')) os = 'Windows';
-  else if (ua.includes('Mac')) os = 'macOS';
-  else if (ua.includes('Linux')) os = 'Linux';
-  else if (ua.includes('Android')) os = 'Android';
-  else if (ua.includes('iOS')) os = 'iOS';
+  // More detailed OS detection
+  if (ua.includes('windows nt 10')) os = 'Windows 10/11';
+  else if (ua.includes('windows nt 6.3')) os = 'Windows 8.1';
+  else if (ua.includes('windows nt 6.2')) os = 'Windows 8';
+  else if (ua.includes('windows nt 6.1')) os = 'Windows 7';
+  else if (ua.includes('windows')) os = 'Windows';
+  else if (ua.includes('android')) {
+    const androidVersion = ua.match(/android (\d+\.\d+)/)?.[1];
+    os = androidVersion ? `Android ${androidVersion}` : 'Android';
+  }
+  else if (ua.includes('iphone os')) {
+    const iosVersion = ua.match(/iphone os (\d+_\d+)/)?.[1]?.replace('_', '.');
+    os = iosVersion ? `iOS ${iosVersion}` : 'iOS';
+  }
+  else if (ua.includes('mac os x')) {
+    const macVersion = ua.match(/mac os x (\d+_\d+)/)?.[1]?.replace('_', '.');
+    os = macVersion ? `macOS ${macVersion}` : 'macOS';
+  }
+  else if (ua.includes('linux')) os = 'Linux';
+  else if (ua.includes('ubuntu')) os = 'Ubuntu';
 
-  return { device_type, browser, os };
+  return { device_type, browser, browser_version, os };
 };
 
 // Get IP address (using multiple services for better reliability)
@@ -189,6 +220,7 @@ export const useVisitorTracking = () => {
             city: visitorData.city,
             device_type: visitorData.device_type,
             browser: visitorData.browser,
+            browser_version: visitorData.browser_version,
             operating_system: visitorData.os,
             is_returning_visitor: localStorage.getItem('has_visited') === 'true'
           }]);
