@@ -119,6 +119,51 @@ export type Database = {
         }
         Relationships: []
       }
+      site_analytics: {
+        Row: {
+          avg_duration: number | null
+          bounce_rate: number | null
+          created_at: string
+          id: string
+          new_visitors: number
+          page_path: string
+          returning_visitors: number
+          total_visits: number
+          unique_sessions: number
+          unique_visitors: number
+          updated_at: string
+          visit_date: string
+        }
+        Insert: {
+          avg_duration?: number | null
+          bounce_rate?: number | null
+          created_at?: string
+          id?: string
+          new_visitors?: number
+          page_path: string
+          returning_visitors?: number
+          total_visits?: number
+          unique_sessions?: number
+          unique_visitors?: number
+          updated_at?: string
+          visit_date: string
+        }
+        Update: {
+          avg_duration?: number | null
+          bounce_rate?: number | null
+          created_at?: string
+          id?: string
+          new_visitors?: number
+          page_path?: string
+          returning_visitors?: number
+          total_visits?: number
+          unique_sessions?: number
+          unique_visitors?: number
+          updated_at?: string
+          visit_date?: string
+        }
+        Relationships: []
+      }
       site_visits: {
         Row: {
           browser: string | null
@@ -325,22 +370,13 @@ export type Database = {
       }
     }
     Views: {
-      site_analytics: {
-        Row: {
-          avg_duration: number | null
-          new_visitors: number | null
-          page_path: string | null
-          returning_visitors: number | null
-          total_visits: number | null
-          unique_sessions: number | null
-          unique_visitors: number | null
-          visit_date: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_site_analytics: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
