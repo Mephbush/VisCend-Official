@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import Hero from "@/components/sections/Hero";
 import ScrollReveal from "@/components/ui/scroll-reveal";
 import ScrollRevealGroup from "@/components/ui/scroll-reveal-group";
+import { ProjectModal } from "@/components/ui/project-modal";
+import bellaVistaDevicesMockup from "@/assets/bella-vista-devices-mockup.jpg";
 import { 
   Sparkles, 
   Eye, 
@@ -149,27 +151,35 @@ const Home = () => {
   // Sample featured projects
   const featuredProjects = [
     {
-      id: 1,
+      id: "1",
       title: language === 'ar' ? 'ما وراء أفق الزمن' : 'Beyond the Horizon of Time',
       category: 'Studio',
       type: language === 'ar' ? 'فيلم قصير ثلاثي الأبعاد' : '3D Short Film',
       description: language === 'ar' 
         ? 'فيلم قصير ثلاثي الأبعاد يتبع رحلة سيارة بي إم دبليو عبر بوابة زمنية، حيث تتحول إلى باتموبايل وتدخل عالماً جديداً'
         : 'A 3D short film following a BMW\'s journey through a time portal, transforming into a Batmobile and entering a new world',
-      videoEmbed: 'https://www.youtube.com/embed/1deJM-7X9oo',
-      tags: ['3D Animation', 'VFX', 'Motion Graphics', 'Cinema 4D']
+      longDescription: language === 'ar'
+        ? 'مشروع سينمائي ثلاثي الأبعاد يجمع بين التكنولوجيا المتقدمة والسرد المبدع. يتبع الفيلم رحلة سيارة بي إم دبليو عبر بوابة زمنية سحرية، حيث تمر بتحولات مذهلة لتصبح باتموبايل أيقونية. يعرض المشروع خبراتنا في الرسوم المتحركة ثلاثية الأبعاد والمؤثرات البصرية المتطورة، مع اهتمام دقيق بالتفاصيل والإضاءة السينمائية.'
+        : 'A cinematic 3D project that combines advanced technology with creative storytelling. The film follows a BMW\'s journey through a magical time portal, undergoing stunning transformations to become the iconic Batmobile. This project showcases our expertise in 3D animation and advanced visual effects, with meticulous attention to detail and cinematic lighting.',
+      embedCode: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/1deJM-7X9oo" title="Beyond the Horizon of Time" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+      technologies: ['Cinema 4D', 'After Effects', 'Octane Render', 'Photoshop', 'Premiere Pro'],
+      date: "2024"
     },
     {
-      id: 2,
+      id: "2",
       title: language === 'ar' ? 'مطعم بيلا فيستا' : 'Bella Vista Restaurant',
       category: 'Web',
       type: language === 'ar' ? 'موقع إلكتروني للمطاعم' : 'Restaurant Website',
       description: language === 'ar'
         ? 'موقع إلكتروني أنيق لمطعم راقي يتميز بنظام حجوزات متطور وعرض تفاعلي للقائمة مع تجربة مستخدم استثنائية'
         : 'An elegant website for a fine dining restaurant featuring an advanced reservation system and interactive menu display',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      longDescription: language === 'ar'
+        ? 'موقع إلكتروني شامل لمطعم بيلا فيستا الراقي، مصمم بأحدث تقنيات الويب لتوفير تجربة استثنائية للعملاء. يتميز الموقع بتصميم متجاوب وأنيق، نظام حجوزات متطور، عرض تفاعلي للقائمة مع صور عالية الجودة، وتكامل مع وسائل التواصل الاجتماعي. تم تطوير الموقع باستخدام أحدث تقنيات React وTypeScript لضمان الأداء الأمثل والأمان.'
+        : 'A comprehensive website for the upscale Bella Vista restaurant, designed with cutting-edge web technologies to provide an exceptional customer experience. The site features a responsive and elegant design, advanced reservation system, interactive menu display with high-quality images, and social media integration. Developed using the latest React and TypeScript technologies to ensure optimal performance and security.',
+      imageUrl: bellaVistaDevicesMockup,
       projectUrl: 'https://rescend.netlify.app',
-      tags: ['React', 'TypeScript', 'Tailwind CSS', 'Booking System']
+      technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Framer Motion'],
+      date: "2024"
     }
   ];
 
@@ -192,81 +202,85 @@ const Home = () => {
 
           <ScrollRevealGroup className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto" stagger={0.12} direction="up">
             {featuredProjects.map((project, index) => (
-              <Card
+              <ProjectModal
                 key={project.id}
-                className="glass border-border/20 hover:border-primary/30 transition-all duration-300 group hover:scale-105"
+                project={project}
+                language={language}
               >
-                <CardContent className="p-0">
-                  <div className="relative overflow-hidden rounded-t-lg">
-                    {project.videoEmbed ? (
-                      <div className="aspect-video relative">
-                        <iframe 
-                          className="absolute inset-0 w-full h-full rounded-t-lg"
-                          src={project.videoEmbed} 
-                          title={project.title} 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                          allowFullScreen
+                <Card className="glass border-border/20 hover:border-primary/30 transition-all duration-300 group hover:scale-105 cursor-pointer">
+                  <CardContent className="p-0">
+                    <div className="relative overflow-hidden rounded-t-lg">
+                      {project.embedCode ? (
+                        <div className="aspect-video relative bg-black/20 flex items-center justify-center">
+                          <Play className="h-16 w-16 text-white/60" />
+                        </div>
+                      ) : project.imageUrl ? (
+                        <img 
+                          src={project.imageUrl}
+                          alt={project.title}
+                          className="aspect-video w-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
+                      ) : (
+                        <div className="aspect-video w-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                          <Play className="h-16 w-16 text-white/60" />
+                        </div>
+                      )}
+                      <div className="absolute top-4 left-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          project.category === 'Studio'
+                            ? 'bg-primary/20 text-primary border border-primary/30'
+                            : 'bg-secondary/20 text-secondary border border-secondary/30'
+                        }`}>
+                          {project.category}
+                        </span>
                       </div>
-                    ) : (
-                      <img 
-                        src={project.image}
-                        alt={project.title}
-                        className="aspect-video w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    )}
-                    <div className="absolute top-4 left-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        project.category === 'Studio'
-                          ? 'bg-primary/20 text-primary border border-primary/30'
-                          : 'bg-secondary/20 text-secondary border border-secondary/30'
-                      }`}>
-                        {project.category}
-                      </span>
-                    </div>
-                    {project.projectUrl && (
-                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          asChild
-                          className="bg-black/50 hover:bg-black/70"
-                        >
-                          <a 
-                            href={project.projectUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
+                      {project.projectUrl && (
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="bg-black/50 hover:bg-black/70"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(project.projectUrl, '_blank');
+                            }}
                           >
                             <Eye className="h-4 w-4 text-white" />
-                          </a>
+                          </Button>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <Button variant="ghost" size="sm" className="bg-white/20 hover:bg-white/30">
+                          <Eye className="h-4 w-4 text-white mr-2" />
+                          {language === 'ar' ? 'عرض التفاصيل' : 'View Details'}
                         </Button>
                       </div>
-                    )}
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 text-neon-primary group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-secondary font-medium mb-3">
-                      {project.type}
-                    </p>
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-muted/50 text-xs rounded-md text-muted-foreground"
-                        >
-                          {tag}
-                        </span>
-                      ))}
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold mb-2 text-neon-primary group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-secondary font-medium mb-3">
+                        {project.type}
+                      </p>
+                      <p className="text-muted-foreground mb-4 leading-relaxed">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies?.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2 py-1 bg-muted/50 text-xs rounded-md text-muted-foreground"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </ProjectModal>
             ))}
             
             {/* Coming Soon Placeholder */}
