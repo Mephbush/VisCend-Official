@@ -10,11 +10,29 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+    PostgrestVersion: "13.0.5"
   }
   public: {
     Tables: {
-      contact_messages: {
+      blocked_email_domains: {
+        Row: {
+          created_at: string
+          domain: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          domain: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          domain?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      contact_inquiries: {
         Row: {
           company: string | null
           created_at: string
@@ -22,7 +40,9 @@ export type Database = {
           id: string
           message: string
           name: string
-          notes: string | null
+          phone: string | null
+          preferred_language: string | null
+          service_type: string | null
           status: string | null
         }
         Insert: {
@@ -32,7 +52,9 @@ export type Database = {
           id?: string
           message: string
           name: string
-          notes?: string | null
+          phone?: string | null
+          preferred_language?: string | null
+          service_type?: string | null
           status?: string | null
         }
         Update: {
@@ -42,175 +64,184 @@ export type Database = {
           id?: string
           message?: string
           name?: string
-          notes?: string | null
+          phone?: string | null
+          preferred_language?: string | null
+          service_type?: string | null
           status?: string | null
         }
         Relationships: []
       }
-      kv_store_e19fe9e0: {
-        Row: {
-          key: string
-          value: Json
-        }
-        Insert: {
-          key: string
-          value: Json
-        }
-        Update: {
-          key?: string
-          value?: Json
-        }
-        Relationships: []
-      }
-      profiles: {
-        Row: {
-          address: string | null
-          avatar_url: string | null
-          created_at: string
-          full_name: string | null
-          id: string
-          is_verified: boolean | null
-          phone: string | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          address?: string | null
-          avatar_url?: string | null
-          created_at?: string
-          full_name?: string | null
-          id?: string
-          is_verified?: boolean | null
-          phone?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          address?: string | null
-          avatar_url?: string | null
-          created_at?: string
-          full_name?: string | null
-          id?: string
-          is_verified?: boolean | null
-          phone?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      projects: {
+      portfolio_items: {
         Row: {
           category: string
-          client: string | null
           created_at: string
-          description: string
+          description_ar: string | null
+          description_en: string | null
           featured: boolean | null
           id: string
           image_url: string | null
-          title: string
+          project_url: string | null
+          service_type: string
+          technologies: string[] | null
+          title_ar: string | null
+          title_en: string
           updated_at: string
-          video_url: string | null
-          year: number | null
         }
         Insert: {
           category: string
-          client?: string | null
           created_at?: string
-          description: string
+          description_ar?: string | null
+          description_en?: string | null
           featured?: boolean | null
           id?: string
           image_url?: string | null
-          title: string
+          project_url?: string | null
+          service_type: string
+          technologies?: string[] | null
+          title_ar?: string | null
+          title_en: string
           updated_at?: string
-          video_url?: string | null
-          year?: number | null
         }
         Update: {
           category?: string
-          client?: string | null
           created_at?: string
-          description?: string
+          description_ar?: string | null
+          description_en?: string | null
           featured?: boolean | null
           id?: string
           image_url?: string | null
-          title?: string
-          updated_at?: string
-          video_url?: string | null
-          year?: number | null
-        }
-        Relationships: []
-      }
-      transactions: {
-        Row: {
-          amount: number
-          created_at: string
-          currency: string | null
-          description: string | null
-          from_user_id: string | null
-          id: string
-          reference_id: string | null
-          status: string | null
-          to_user_id: string | null
-          transaction_type: string
-          updated_at: string
-        }
-        Insert: {
-          amount: number
-          created_at?: string
-          currency?: string | null
-          description?: string | null
-          from_user_id?: string | null
-          id?: string
-          reference_id?: string | null
-          status?: string | null
-          to_user_id?: string | null
-          transaction_type: string
-          updated_at?: string
-        }
-        Update: {
-          amount?: number
-          created_at?: string
-          currency?: string | null
-          description?: string | null
-          from_user_id?: string | null
-          id?: string
-          reference_id?: string | null
-          status?: string | null
-          to_user_id?: string | null
-          transaction_type?: string
+          project_url?: string | null
+          service_type?: string
+          technologies?: string[] | null
+          title_ar?: string | null
+          title_en?: string
           updated_at?: string
         }
         Relationships: []
       }
-      wallets: {
+      site_analytics: {
         Row: {
-          balance: number | null
+          avg_duration: number | null
+          bounce_rate: number | null
           created_at: string
-          currency: string | null
           id: string
+          new_visitors: number
+          page_path: string
+          returning_visitors: number
+          total_visits: number
+          unique_sessions: number
+          unique_visitors: number
           updated_at: string
-          user_id: string
+          visit_date: string
         }
         Insert: {
-          balance?: number | null
+          avg_duration?: number | null
+          bounce_rate?: number | null
           created_at?: string
-          currency?: string | null
           id?: string
+          new_visitors?: number
+          page_path: string
+          returning_visitors?: number
+          total_visits?: number
+          unique_sessions?: number
+          unique_visitors?: number
           updated_at?: string
-          user_id: string
+          visit_date: string
         }
         Update: {
-          balance?: number | null
+          avg_duration?: number | null
+          bounce_rate?: number | null
           created_at?: string
-          currency?: string | null
           id?: string
+          new_visitors?: number
+          page_path?: string
+          returning_visitors?: number
+          total_visits?: number
+          unique_sessions?: number
+          unique_visitors?: number
           updated_at?: string
-          user_id?: string
+          visit_date?: string
         }
+        Relationships: []
+      }
+      site_visits: {
+        Row: {
+          browser: string | null
+          browser_version: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          ended_at: string | null
+          id: string
+          ip_address: string | null
+          is_returning_visitor: boolean | null
+          language: string | null
+          operating_system: string | null
+          page_path: string
+          page_title: string | null
+          referrer: string | null
+          screen_resolution: string | null
+          session_id: string | null
+          timezone: string | null
+          user_agent: string | null
+          visit_duration: number | null
+        }
+        Insert: {
+          browser?: string | null
+          browser_version?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          ended_at?: string | null
+          id?: string
+          ip_address?: string | null
+          is_returning_visitor?: boolean | null
+          language?: string | null
+          operating_system?: string | null
+          page_path: string
+          page_title?: string | null
+          referrer?: string | null
+          screen_resolution?: string | null
+          session_id?: string | null
+          timezone?: string | null
+          user_agent?: string | null
+          visit_duration?: number | null
+        }
+        Update: {
+          browser?: string | null
+          browser_version?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          ended_at?: string | null
+          id?: string
+          ip_address?: string | null
+          is_returning_visitor?: boolean | null
+          language?: string | null
+          operating_system?: string | null
+          page_path?: string
+          page_title?: string | null
+          referrer?: string | null
+          screen_resolution?: string | null
+          session_id?: string | null
+          timezone?: string | null
+          user_agent?: string | null
+          visit_duration?: number | null
+        }
+        Relationships: []
+      }
+      visitors_site: {
+        Row: {}
+        Insert: {}
+        Update: {}
         Relationships: []
       }
       website_visits: {
         Row: {
+          bounce_rate: boolean | null
           browser: string | null
           browser_version: string | null
           city: string | null
@@ -234,6 +265,7 @@ export type Database = {
           os: string | null
           os_version: string | null
           page_path: string
+          page_title: string | null
           platform: string | null
           postal: string | null
           referrer: string | null
@@ -241,15 +273,17 @@ export type Database = {
           screen_color_depth: number | null
           screen_height: number | null
           screen_width: number | null
-          session_duration: number | null
+          session_id: string | null
           timezone: string | null
           updated_at: string
           user_agent: string | null
           viewport_height: number | null
           viewport_width: number | null
+          visit_duration: number | null
           visitor_ip: string | null
         }
         Insert: {
+          bounce_rate?: boolean | null
           browser?: string | null
           browser_version?: string | null
           city?: string | null
@@ -273,6 +307,7 @@ export type Database = {
           os?: string | null
           os_version?: string | null
           page_path: string
+          page_title?: string | null
           platform?: string | null
           postal?: string | null
           referrer?: string | null
@@ -280,15 +315,17 @@ export type Database = {
           screen_color_depth?: number | null
           screen_height?: number | null
           screen_width?: number | null
-          session_duration?: number | null
+          session_id?: string | null
           timezone?: string | null
           updated_at?: string
           user_agent?: string | null
           viewport_height?: number | null
           viewport_width?: number | null
+          visit_duration?: number | null
           visitor_ip?: string | null
         }
         Update: {
+          bounce_rate?: boolean | null
           browser?: string | null
           browser_version?: string | null
           city?: string | null
@@ -312,6 +349,7 @@ export type Database = {
           os?: string | null
           os_version?: string | null
           page_path?: string
+          page_title?: string | null
           platform?: string | null
           postal?: string | null
           referrer?: string | null
@@ -319,30 +357,26 @@ export type Database = {
           screen_color_depth?: number | null
           screen_height?: number | null
           screen_width?: number | null
-          session_duration?: number | null
+          session_id?: string | null
           timezone?: string | null
           updated_at?: string
           user_agent?: string | null
           viewport_height?: number | null
           viewport_width?: number | null
+          visit_duration?: number | null
           visitor_ip?: string | null
         }
         Relationships: []
       }
     }
     Views: {
-      visit_stats: {
-        Row: {
-          page_path: string | null
-          total_visits: number | null
-          unique_visitors: number | null
-          visit_date: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_site_analytics: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
