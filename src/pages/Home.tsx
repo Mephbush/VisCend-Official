@@ -7,6 +7,7 @@ import ScrollReveal from "@/components/ui/scroll-reveal";
 import ScrollRevealGroup from "@/components/ui/scroll-reveal-group";
 import { ProjectModal } from "@/components/ui/project-modal";
 import bellaVistaDevicesMockup from "@/assets/bella-vista-devices-mockup.jpg";
+import beyondHorizonThumbnail from "@/assets/beyond-horizon-thumbnail.jpg";
 import { 
   Sparkles, 
   Eye, 
@@ -161,6 +162,7 @@ const Home = () => {
       longDescription: language === 'ar'
         ? 'مشروع سينمائي ثلاثي الأبعاد يجمع بين التكنولوجيا المتقدمة والسرد المبدع. يتبع الفيلم رحلة سيارة بي إم دبليو عبر بوابة زمنية سحرية، حيث تمر بتحولات مذهلة لتصبح باتموبايل أيقونية. يعرض المشروع خبراتنا في الرسوم المتحركة ثلاثية الأبعاد والمؤثرات البصرية المتطورة، مع اهتمام دقيق بالتفاصيل والإضاءة السينمائية.'
         : 'A cinematic 3D project that combines advanced technology with creative storytelling. The film follows a BMW\'s journey through a magical time portal, undergoing stunning transformations to become the iconic Batmobile. This project showcases our expertise in 3D animation and advanced visual effects, with meticulous attention to detail and cinematic lighting.',
+      imageUrl: beyondHorizonThumbnail,
       embedCode: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/1deJM-7X9oo" title="Beyond the Horizon of Time" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
       technologies: ['Cinema 4D', 'After Effects', 'Octane Render', 'Photoshop', 'Premiere Pro'],
       date: "2024"
