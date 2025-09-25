@@ -368,6 +368,135 @@ export type Database = {
         }
         Relationships: []
       }
+      website_visits_duplicate: {
+        Row: {
+          bounce_rate: boolean | null
+          browser: string | null
+          browser_version: string | null
+          city: string | null
+          connection_speed: number | null
+          connection_type: string | null
+          cookie_enabled: boolean | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          do_not_track: string | null
+          id: string
+          isp: string | null
+          language: string | null
+          languages: string | null
+          latitude: number | null
+          longitude: number | null
+          memory_limit: number | null
+          memory_total: number | null
+          memory_used: number | null
+          online_status: boolean | null
+          os: string | null
+          os_version: string | null
+          page_path: string
+          page_title: string | null
+          platform: string | null
+          postal: string | null
+          referrer: string | null
+          region: string | null
+          screen_color_depth: number | null
+          screen_height: number | null
+          screen_width: number | null
+          session_id: string | null
+          timezone: string | null
+          updated_at: string
+          user_agent: string | null
+          viewport_height: number | null
+          viewport_width: number | null
+          visit_duration: number | null
+          visitor_ip: string | null
+        }
+        Insert: {
+          bounce_rate?: boolean | null
+          browser?: string | null
+          browser_version?: string | null
+          city?: string | null
+          connection_speed?: number | null
+          connection_type?: string | null
+          cookie_enabled?: boolean | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          do_not_track?: string | null
+          id?: string
+          isp?: string | null
+          language?: string | null
+          languages?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          memory_limit?: number | null
+          memory_total?: number | null
+          memory_used?: number | null
+          online_status?: boolean | null
+          os?: string | null
+          os_version?: string | null
+          page_path: string
+          page_title?: string | null
+          platform?: string | null
+          postal?: string | null
+          referrer?: string | null
+          region?: string | null
+          screen_color_depth?: number | null
+          screen_height?: number | null
+          screen_width?: number | null
+          session_id?: string | null
+          timezone?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          viewport_height?: number | null
+          viewport_width?: number | null
+          visit_duration?: number | null
+          visitor_ip?: string | null
+        }
+        Update: {
+          bounce_rate?: boolean | null
+          browser?: string | null
+          browser_version?: string | null
+          city?: string | null
+          connection_speed?: number | null
+          connection_type?: string | null
+          cookie_enabled?: boolean | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          do_not_track?: string | null
+          id?: string
+          isp?: string | null
+          language?: string | null
+          languages?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          memory_limit?: number | null
+          memory_total?: number | null
+          memory_used?: number | null
+          online_status?: boolean | null
+          os?: string | null
+          os_version?: string | null
+          page_path?: string
+          page_title?: string | null
+          platform?: string | null
+          postal?: string | null
+          referrer?: string | null
+          region?: string | null
+          screen_color_depth?: number | null
+          screen_height?: number | null
+          screen_width?: number | null
+          session_id?: string | null
+          timezone?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          viewport_height?: number | null
+          viewport_width?: number | null
+          visit_duration?: number | null
+          visitor_ip?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
