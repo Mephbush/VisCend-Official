@@ -286,3 +286,15 @@ export const useVisitTracker = () => {
     return () => clearTimeout(timeoutId);
   }, [location.pathname, location.search]); // Also track query parameters changes
 };
+const { error, data } = await supabase
+  .from('website_visits')
+  .insert([visitData])
+  .select('id')
+  .single();
+
+if (error) {
+  console.error('❌ فشل الإدراج:', error.message, error.details);
+} else {
+  console.log('✅ إدراج ناجح:', data);
+}
+
