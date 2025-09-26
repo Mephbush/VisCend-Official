@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import CustomCursor from "@/components/ui/custom-cursor";
 import IntroAnimation from "@/components/ui/intro-animation";
 import { cn } from "@/lib/utils";
-import { useSimpleTracking } from "@/hooks/use-simple-tracking";
+import { useSimpleTracking } from "@/hooks/usesimpletracking";
 
 const Layout = () => {
   const [language, setLanguage] = useState<"en" | "ar">("en");
