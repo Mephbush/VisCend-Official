@@ -233,18 +233,25 @@ export const useVisitTracker = () => {
           visit_duration: 0
         };
 
-        // Insert visit data
+        // Insert visit data - simplified for debugging
+        console.log('Attempting to insert visit data:', visitData);
         const { error, data } = await supabase
           .from('website_visits')
           .insert([visitData])
-          .select('id')
-          .single();
+          .select('id');
 
         if (error) {
           console.error('Failed to track visit:', error);
-        } else if (data) {
+          console.error('Error details:', {
+            code: error.code,
+            message: error.message,
+            details: error.details,
+            hint: error.hint
+          });
+        } else if (data && data.length > 0) {
+          console.log('Visit tracked successfully:', data[0]);
           // Store visit ID for potential duration updates
-          sessionStorage.setItem(`visit_id_${location.pathname}`, data.id);
+          sessionStorage.setItem(`visit_id_${location.pathname}`, data[0].id);
         }
 
         // Track visit duration on page unload
