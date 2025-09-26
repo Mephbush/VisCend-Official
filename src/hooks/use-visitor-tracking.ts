@@ -164,20 +164,42 @@ const getVisitorInfo = async (): Promise<any> => {
   };
 };
 
+// Generate unique session ID
+const generateSessionId = () => {
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+};
+
+// Get or create session ID
+const getSessionId = () => {
+  let sessionId = sessionStorage.getItem('visitor_session_id');
+  if (!sessionId) {
+    sessionId = generateSessionId();
+    sessionStorage.setItem('visitor_session_id', sessionId);
+  }
+  return sessionId;
+};
+
 export const useVisitTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
     const trackVisit = async () => {
       try {
+        const sessionId = getSessionId();
+        const startTime = Date.now();
+        
+        // Store start time for duration calculation
+        sessionStorage.setItem(`visit_start_${location.pathname}`, startTime.toString());
+        
         const clientInfo = getClientInfo();
         const visitorInfo = await getVisitorInfo();
         
         const visitData = {
           visitor_ip: visitorInfo.ip,
-          user_agent: navigator.userAgent.substring(0, 255), // Limit length
+          user_agent: navigator.userAgent.substring(0, 500),
           referrer: document.referrer || null,
           page_path: location.pathname,
+          page_title: document.title || null,
           device_type: clientInfo.deviceType,
           browser: clientInfo.browser,
           browser_version: clientInfo.browserVersion,
@@ -206,24 +228,61 @@ export const useVisitTracker = () => {
           isp: visitorInfo.isp,
           latitude: visitorInfo.latitude,
           longitude: visitorInfo.longitude,
-          postal: visitorInfo.postal
+          postal: visitorInfo.postal,
+          session_id: sessionId,
+          visit_duration: 0
         };
 
-        const { error } = await supabase
+        // Insert visit data
+        const { error, data } = await supabase
           .from('website_visits')
-          .insert([visitData]);
+          .insert([visitData])
+          .select('id')
+          .single();
 
         if (error) {
           console.error('Failed to track visit:', error);
+        } else if (data) {
+          // Store visit ID for potential duration updates
+          sessionStorage.setItem(`visit_id_${location.pathname}`, data.id);
         }
+
+        // Track visit duration on page unload
+        const handleBeforeUnload = () => {
+          const endTime = Date.now();
+          const startTimeStr = sessionStorage.getItem(`visit_start_${location.pathname}`);
+          const visitId = sessionStorage.getItem(`visit_id_${location.pathname}`);
+          
+          if (startTimeStr && visitId) {
+            const duration = Math.round((endTime - parseInt(startTimeStr)) / 1000); // Duration in seconds
+            
+            // Use navigator.sendBeacon for better reliability on page unload
+            const updateData = JSON.stringify({ visit_duration: duration });
+            navigator.sendBeacon(
+              `https://eqehmuklqhcdzilrjjxm.supabase.co/rest/v1/website_visits?id=eq.${visitId}`,
+              updateData
+            );
+          }
+        };
+
+        // Add event listeners for tracking duration
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('pagehide', handleBeforeUnload);
+
+        // Cleanup function
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+          window.removeEventListener('pagehide', handleBeforeUnload);
+        };
+
       } catch (error) {
         console.error('Error tracking visit:', error);
       }
     };
 
-    // Track visit after a small delay to avoid affecting page load
-    const timeoutId = setTimeout(trackVisit, 1000);
+    // Track visit immediately but with a small delay to ensure location is stable
+    const timeoutId = setTimeout(trackVisit, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [location.pathname]);
+  }, [location.pathname, location.search]); // Also track query parameters changes
 };
