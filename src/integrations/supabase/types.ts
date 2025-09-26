@@ -119,6 +119,51 @@ export type Database = {
         }
         Relationships: []
       }
+      site_analytics: {
+        Row: {
+          avg_duration: number | null
+          bounce_rate: number | null
+          created_at: string
+          id: string
+          new_visitors: number
+          page_path: string
+          returning_visitors: number
+          total_visits: number
+          unique_sessions: number
+          unique_visitors: number
+          updated_at: string
+          visit_date: string
+        }
+        Insert: {
+          avg_duration?: number | null
+          bounce_rate?: number | null
+          created_at?: string
+          id?: string
+          new_visitors?: number
+          page_path: string
+          returning_visitors?: number
+          total_visits?: number
+          unique_sessions?: number
+          unique_visitors?: number
+          updated_at?: string
+          visit_date: string
+        }
+        Update: {
+          avg_duration?: number | null
+          bounce_rate?: number | null
+          created_at?: string
+          id?: string
+          new_visitors?: number
+          page_path?: string
+          returning_visitors?: number
+          total_visits?: number
+          unique_sessions?: number
+          unique_visitors?: number
+          updated_at?: string
+          visit_date?: string
+        }
+        Relationships: []
+      }
       site_visits: {
         Row: {
           browser: string | null
@@ -129,7 +174,7 @@ export type Database = {
           device_type: string | null
           ended_at: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: string | null
           is_returning_visitor: boolean | null
           language: string | null
           operating_system: string | null
@@ -151,7 +196,7 @@ export type Database = {
           device_type?: string | null
           ended_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: string | null
           is_returning_visitor?: boolean | null
           language?: string | null
           operating_system?: string | null
@@ -173,7 +218,7 @@ export type Database = {
           device_type?: string | null
           ended_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: string | null
           is_returning_visitor?: boolean | null
           language?: string | null
           operating_system?: string | null
@@ -189,53 +234,149 @@ export type Database = {
         Relationships: []
       }
       visitors_site: {
-        Row: {
-          created_at: string
-          id: number
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-        }
-        Update: {
-          created_at?: string
-          id?: number
-        }
+        Row: {}
+        Insert: {}
+        Update: {}
         Relationships: []
       }
       website_visits: {
         Row: {
+          bounce_rate: boolean | null
+          browser: string | null
+          browser_version: string | null
+          city: string | null
+          connection_speed: number | null
+          connection_type: string | null
+          cookie_enabled: boolean | null
+          country: string | null
           created_at: string
-          id: number
+          device_type: string | null
+          do_not_track: string | null
+          id: string
+          isp: string | null
+          language: string | null
+          languages: string | null
+          latitude: number | null
+          longitude: number | null
+          memory_limit: number | null
+          memory_total: number | null
+          memory_used: number | null
+          online_status: boolean | null
+          os: string | null
+          os_version: string | null
+          page_path: string
+          page_title: string | null
+          platform: string | null
+          postal: string | null
+          referrer: string | null
+          region: string | null
+          screen_color_depth: number | null
+          screen_height: number | null
+          screen_width: number | null
+          session_id: string | null
+          timezone: string | null
+          updated_at: string
+          user_agent: string | null
+          viewport_height: number | null
+          viewport_width: number | null
+          visit_duration: number | null
+          visitor_ip: string | null
         }
         Insert: {
+          bounce_rate?: boolean | null
+          browser?: string | null
+          browser_version?: string | null
+          city?: string | null
+          connection_speed?: number | null
+          connection_type?: string | null
+          cookie_enabled?: boolean | null
+          country?: string | null
           created_at?: string
-          id?: number
+          device_type?: string | null
+          do_not_track?: string | null
+          id?: string
+          isp?: string | null
+          language?: string | null
+          languages?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          memory_limit?: number | null
+          memory_total?: number | null
+          memory_used?: number | null
+          online_status?: boolean | null
+          os?: string | null
+          os_version?: string | null
+          page_path: string
+          page_title?: string | null
+          platform?: string | null
+          postal?: string | null
+          referrer?: string | null
+          region?: string | null
+          screen_color_depth?: number | null
+          screen_height?: number | null
+          screen_width?: number | null
+          session_id?: string | null
+          timezone?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          viewport_height?: number | null
+          viewport_width?: number | null
+          visit_duration?: number | null
+          visitor_ip?: string | null
         }
         Update: {
+          bounce_rate?: boolean | null
+          browser?: string | null
+          browser_version?: string | null
+          city?: string | null
+          connection_speed?: number | null
+          connection_type?: string | null
+          cookie_enabled?: boolean | null
+          country?: string | null
           created_at?: string
-          id?: number
+          device_type?: string | null
+          do_not_track?: string | null
+          id?: string
+          isp?: string | null
+          language?: string | null
+          languages?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          memory_limit?: number | null
+          memory_total?: number | null
+          memory_used?: number | null
+          online_status?: boolean | null
+          os?: string | null
+          os_version?: string | null
+          page_path?: string
+          page_title?: string | null
+          platform?: string | null
+          postal?: string | null
+          referrer?: string | null
+          region?: string | null
+          screen_color_depth?: number | null
+          screen_height?: number | null
+          screen_width?: number | null
+          session_id?: string | null
+          timezone?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          viewport_height?: number | null
+          viewport_width?: number | null
+          visit_duration?: number | null
+          visitor_ip?: string | null
         }
         Relationships: []
       }
     }
     Views: {
-      site_analytics: {
-        Row: {
-          avg_duration: number | null
-          new_visitors: number | null
-          page_path: string | null
-          returning_visitors: number | null
-          total_visits: number | null
-          unique_sessions: number | null
-          unique_visitors: number | null
-          visit_date: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_site_analytics: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
