@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import CustomCursor from "@/components/ui/custom-cursor";
 import IntroAnimation from "@/components/ui/intro-animation";
 import { cn } from "@/lib/utils";
-import { useVisitTracker } from "@/hooks/use-visitor-tracking";
+import { useSimpleTracking } from "@/hooks/use-simple-tracking";
 
 const Layout = () => {
   const [language, setLanguage] = useState<"en" | "ar">("en");
@@ -16,8 +16,8 @@ const Layout = () => {
   const location = useLocation();
   const skipFirstNav = useRef(true);
 
-  // Track visitor data
-  useVisitTracker();
+  // Track visitor data with simple system
+  useSimpleTracking();
 
   // Show intro on every visit for now
   useEffect(() => {
