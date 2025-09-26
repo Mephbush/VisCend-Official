@@ -156,7 +156,7 @@ const Contact = () => {
       }
 
       // Insert into Supabase
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('contact_inquiries')
         .insert([{
           name: formData.name,

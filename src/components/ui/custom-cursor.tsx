@@ -38,7 +38,7 @@ const CustomCursor = () => {
         const newParticles: Particle[] = [];
         for (let i = 0; i < particleCount; i++) {
           newParticles.push({
-            id: Date.now() + Math.random() + i,
+            id: Date.now() + Math.random(),
             x: lastPosition.x + (Math.random() - 0.5) * 12,
             y: lastPosition.y + (Math.random() - 0.5) * 12,
             vx: (Math.random() - 0.5) * 1.5,
@@ -47,10 +47,7 @@ const CustomCursor = () => {
             maxLife: 24,
           });
         }
-        setParticles(prev => {
-          const filteredPrev = prev.filter(p => p.life > 0);
-          return [...filteredPrev, ...newParticles].slice(-15); // Keep max 15 particles
-        });
+        setParticles(prev => [...prev, ...newParticles].slice(-20)); // Keep max 20 particles
       }
 
       lastPositionRef.current = newPosition;
@@ -65,41 +62,24 @@ const CustomCursor = () => {
 
   useEffect(() => {
     const animate = () => {
-      setParticles(prev => {
-        const updatedParticles = prev
-          .map(p => ({
-            ...p,
-            x: p.x + p.vx,
-            y: p.y + p.vy,
-            life: p.life - 1,
-            vx: p.vx * 0.985,
-            vy: p.vy * 0.985 + 0.08,
-          }))
-          .filter(p => p.life > 0 && p.x > -50 && p.x < window.innerWidth + 50 && p.y > -50 && p.y < window.innerHeight + 50);
-        
-        // Only continue animation if there are particles
-        if (updatedParticles.length > 0) {
-          rafId.current = requestAnimationFrame(animate);
-        } else {
-          rafId.current = null;
-        }
-        
-        return updatedParticles;
-      });
-    };
-    
-    // Start animation only if there are particles
-    if (particles.length > 0 && !rafId.current) {
+      setParticles(prev => prev
+        .map(p => ({
+          ...p,
+          x: p.x + p.vx,
+          y: p.y + p.vy,
+          life: p.life - 1,
+          vx: p.vx * 0.985,
+          vy: p.vy * 0.985 + 0.08,
+        }))
+        .filter(p => p.life > 0)
+      );
       rafId.current = requestAnimationFrame(animate);
-    }
-    
-    return () => {
-      if (rafId.current) {
-        cancelAnimationFrame(rafId.current);
-        rafId.current = null;
-      }
     };
-  }, [particles.length]);
+    rafId.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
+  }, []);
 
   return (
     <>

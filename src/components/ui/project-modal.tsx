@@ -3,8 +3,6 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
-  DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -68,31 +66,19 @@ export const ProjectModal = ({ project, children, language }: ProjectModalProps)
           {children}
         </div>
       </DialogTrigger>
-      <DialogContent 
-        className="max-w-4xl w-full max-h-[90vh] p-0 glass border-border/20 overflow-y-auto overflow-x-hidden" 
-        onClick={(e) => e.stopPropagation()}
-        aria-describedby="project-description"
-        style={{ 
-          maxHeight: '90vh',
-          overflowY: 'auto',
-          scrollBehavior: 'smooth',
-          WebkitOverflowScrolling: 'touch' 
-        }}
-      >
+      <DialogContent className="max-w-4xl w-full max-h-[90vh] p-0 glass border-border/20 overflow-hidden" 
+        onClick={(e) => e.stopPropagation()}>
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-border/20">
             <div className="flex items-center space-x-4">
-              <DialogTitle className="text-2xl font-bold text-neon-primary">
+              <h2 className="text-2xl font-bold text-neon-primary">
                 {project.title}
-              </DialogTitle>
+              </h2>
               <Badge className="bg-primary/20 text-primary border-primary/30">
                 {project.category}
               </Badge>
             </div>
-            <DialogDescription className="sr-only">
-              {project.description}
-            </DialogDescription>
             <Button
               variant="ghost"
               size="sm"
@@ -104,16 +90,8 @@ export const ProjectModal = ({ project, children, language }: ProjectModalProps)
           </div>
 
           {/* Content */}
-          <div 
-            className="flex-1 overflow-y-auto overflow-x-hidden"
-            style={{ 
-              maxHeight: 'calc(90vh - 80px)',
-              overflowY: 'auto',
-              scrollBehavior: 'smooth',
-              WebkitOverflowScrolling: 'touch'
-            }}
-          >
-            <div id="project-description" className="p-6">
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-6">
               {/* Media Section */}
               <div className="mb-8">
                 {project.embedCode ? (

@@ -17,7 +17,6 @@ import {
   Calendar,
   ExternalLink
 } from "lucide-react";
-import beyondHorizonThumbnail from "@/assets/beyond-horizon-thumbnail.jpg";
 
 const Studio = () => {
   const { language } = useOutletContext<{ language: "en" | "ar" }>();
@@ -213,7 +212,6 @@ const Studio = () => {
       longDescription: language === 'ar'
         ? 'عمل سينمائي ثلاثي الأبعاد متطور يجمع بين تقنيات الرسوم المتحركة المتقدمة والمؤثرات البصرية المذهلة. يحكي الفيلم قصة رحلة استثنائية عبر الزمن، حيث تصبح سيارة بي إم دبليو العادية جزءاً من مغامرة خيالية تحولها إلى مركبة الأبطال الخارقين الشهيرة "باتموبايل".'
         : 'An advanced 3D cinematic work that combines cutting-edge animation techniques with stunning visual effects. The film tells the story of an extraordinary journey through time, where an ordinary BMW becomes part of a fantasy adventure that transforms it into the famous superhero vehicle "Batmobile".',
-      imageUrl: beyondHorizonThumbnail,
       embedCode: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/1deJM-7X9oo" title="VisCend - Beyond The Horizon of Time" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
       technologies: ["3D Animation", "VFX", "Motion Graphics", "Cinema 4D", "After Effects", "Premiere Pro"],
       date: "2024",

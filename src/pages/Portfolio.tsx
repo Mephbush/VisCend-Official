@@ -96,7 +96,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchPortfolioItems = async () => {
       try {
-        const { data, error } = await (supabase as any)
+        const { data, error } = await supabase
           .from('portfolio_items')
           .select('*')
           .order('created_at', { ascending: false });
@@ -104,8 +104,8 @@ const Portfolio = () => {
         if (error) {
           console.error('Error fetching portfolio items:', error);
         } else {
-          setPortfolioItems((data as any) || []);
-          setFilteredItems((data as any) || []);
+          setPortfolioItems(data || []);
+          setFilteredItems(data || []);
         }
       } catch (error) {
         console.error('Error fetching portfolio items:', error);
