@@ -1,67 +1,20 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import DeviceDetector from 'device-detector-js';
 
-// Function to get comprehensive client info
+// تحليل شامل للجهاز
 const getClientInfo = () => {
   const ua = navigator.userAgent;
-  
-  // Detect device type
-  const deviceType = /Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) 
-    ? 'mobile' 
-    : /Tablet|iPad/i.test(ua) 
-    ? 'tablet' 
-    : 'desktop';
+  const detector = new DeviceDetector();
+  const parsed = detector.parse(ua);
 
-  // Detect browser with version
-  let browser = 'Unknown';
-  let browserVersion = 'Unknown';
-  if (ua.includes('Chrome') && !ua.includes('Edg')) {
-    browser = 'Chrome';
-    const match = ua.match(/Chrome\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Firefox')) {
-    browser = 'Firefox';
-    const match = ua.match(/Firefox\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
-    browser = 'Safari';
-    const match = ua.match(/Version\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Edg')) {
-    browser = 'Edge';
-    const match = ua.match(/Edg\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Opera')) {
-    browser = 'Opera';
-    const match = ua.match(/Opera\/(\d+\.\d+)/);
-    browserVersion = match ? match[1] : 'Unknown';
-  }
+  // تحليل يدوي إضافي للمتصفح والنظام
+  let browser = parsed.client?.name || 'Unknown';
+  let browserVersion = parsed.client?.version || 'Unknown';
+  let os = parsed.os?.name || 'Unknown';
+  let osVersion = parsed.os?.version || 'Unknown';
 
-  // Detect OS with version
-  let os = 'Unknown';
-  let osVersion = 'Unknown';
-  if (ua.includes('Windows NT')) {
-    os = 'Windows';
-    const match = ua.match(/Windows NT (\d+\.\d+)/);
-    osVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('Mac OS X')) {
-    os = 'macOS';
-    const match = ua.match(/Mac OS X (\d+[._]\d+)/);
-    osVersion = match ? match[1].replace('_', '.') : 'Unknown';
-  } else if (ua.includes('Linux')) {
-    os = 'Linux';
-  } else if (ua.includes('Android')) {
-    os = 'Android';
-    const match = ua.match(/Android (\d+\.\d+)/);
-    osVersion = match ? match[1] : 'Unknown';
-  } else if (ua.includes('iPhone OS') || ua.includes('iOS')) {
-    os = 'iOS';
-    const match = ua.match(/OS (\d+_\d+)/);
-    osVersion = match ? match[1].replace('_', '.') : 'Unknown';
-  }
-
-  // Get additional device info
   const screenWidth = screen.width;
   const screenHeight = screen.height;
   const screenColorDepth = screen.colorDepth;
@@ -72,29 +25,28 @@ const getClientInfo = () => {
   const cookieEnabled = navigator.cookieEnabled;
   const onlineStatus = navigator.onLine;
   const doNotTrack = navigator.doNotTrack || 'unspecified';
-  
-  // Get connection info if available
+
   const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
   const connectionType = connection?.effectiveType || 'unknown';
   const connectionSpeed = connection?.downlink || null;
-  
-  // Get viewport info
+
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
-  
-  // Get memory info if available
+
   const memory = (performance as any).memory;
   const memoryInfo = memory ? {
-    used: Math.round(memory.usedJSHeapSize / 1048576), // MB
-    total: Math.round(memory.totalJSHeapSize / 1048576), // MB
-    limit: Math.round(memory.jsHeapSizeLimit / 1048576) // MB
+    used: Math.round(memory.usedJSHeapSize / 1048576),
+    total: Math.round(memory.totalJSHeapSize / 1048576),
+    limit: Math.round(memory.jsHeapSizeLimit / 1048576)
   } : null;
 
-  return { 
-    deviceType, 
-    browser, 
+  return {
+    deviceType: parsed.device?.type || 'unknown',
+    deviceBrand: parsed.device?.brand || 'unknown',
+    deviceModel: parsed.device?.model || 'unknown',
+    browser,
     browserVersion,
-    os, 
+    os,
     osVersion,
     screenWidth,
     screenHeight,
@@ -114,7 +66,7 @@ const getClientInfo = () => {
   };
 };
 
-// Function to get visitor IP and location info
+// مصادر متعددة للحصول على IP وموقع الزائر
 const getVisitorInfo = async (): Promise<any> => {
   const ipServices = [
     'https://api.ipify.org?format=json',
@@ -128,8 +80,7 @@ const getVisitorInfo = async (): Promise<any> => {
     try {
       const response = await fetch(service);
       const data = await response.json();
-      
-      // Different services return different structures
+
       let result = {
         ip: data.ip || data.query || 'unknown',
         country: data.country || data.country_name || data.country_code || null,
@@ -172,13 +123,15 @@ export const useVisitTracker = () => {
       try {
         const clientInfo = getClientInfo();
         const visitorInfo = await getVisitorInfo();
-        
+
         const visitData = {
           visitor_ip: visitorInfo.ip,
-          user_agent: navigator.userAgent.substring(0, 255), // Limit length
+          user_agent: navigator.userAgent.substring(0, 255),
           referrer: document.referrer || null,
           page_path: location.pathname,
           device_type: clientInfo.deviceType,
+          device_brand: clientInfo.deviceBrand,
+          device_model: clientInfo.deviceModel,
           browser: clientInfo.browser,
           browser_version: clientInfo.browserVersion,
           os: clientInfo.os,
@@ -209,10 +162,7 @@ export const useVisitTracker = () => {
           postal: visitorInfo.postal
         };
 
-        const { error } = await supabase
-          .from('website_visits')
-          .insert([visitData]);
-
+        const { error } = await supabase.from('website_visits').insert([visitData]);
         if (error) {
           console.error('Failed to track visit:', error);
         }
@@ -221,9 +171,7 @@ export const useVisitTracker = () => {
       }
     };
 
-    // Track visit after a small delay to avoid affecting page load
     const timeoutId = setTimeout(trackVisit, 1000);
-
     return () => clearTimeout(timeoutId);
   }, [location.pathname]);
 };
